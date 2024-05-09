@@ -1,0 +1,65 @@
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #0040B5;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  transition: left 0.3s ease;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  width: 70px;
+  height: auto;
+  border-radius: 50%; /* Make the logo circular */
+  background-color: #fff; 
+  padding: 15px; 
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 10px;
+  margin-top: -50px; 
+}
+
+.sidebar-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  color: #fff;
+}
+
+.sidebar-menu li:hover {
+  border-radius: 5px;
+  background-color: #fff;
+  color: #0040B5;
+}
+
+
+li.active {
+  color: #0040B5;
+  background-color: #fff;
+  border-radius: 5px;
+}

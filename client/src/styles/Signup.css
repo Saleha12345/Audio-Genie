@@ -1,0 +1,152 @@
+
+.signup-container {
+display: flex;
+overflow-y: auto;
+}
+
+.left-half {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #f5f5f5;
+height: 50%;
+}
+
+.left-image {
+max-width: 100%; 
+height: auto;
+}
+
+.right-half {
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 50%;
+overflow: hidden; 
+}
+
+.signup-form {
+max-width: 90%; 
+width: 100%;
+height: 20%;
+background-color: #ffffff; 
+padding: 20px;
+margin: 30px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form h2 {
+text-align: center;
+margin-bottom: 20px;
+margin-top: 0; 
+}
+
+form {
+display: flex;
+flex-direction: column;
+}
+
+label {
+margin-bottom: 10px;
+}
+
+input {
+width: 100%;
+padding: 10px;
+margin-top: 5px;
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+.error {
+border-color: #ff6347;
+}
+
+.error-message {
+color: #ff6347;
+font-size: 14px;
+margin-bottom: 2px;
+margin-top: -5px;
+text-align: left;
+
+}
+
+button[type="submit"],
+.google-btn {
+width: 100%;
+padding: 20px;
+background-color: #0040B5;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-bottom: 12px;
+margin-top: 8px;
+}
+
+.country-selector-container {
+  position: relative;
+}
+
+.country-selector-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.country-selector-container::after {
+  
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; 
+}
+
+button[type="submit"]:hover,
+.google-btn:hover {
+background-color: #0056b3;
+}
+
+.google-btn {
+background-color: transparent;
+border: 2px solid  #0040B5;
+color: #0040B5;
+}
+
+.google-btn:hover {
+background-color: #0040B5;
+color: #fff;
+}
+
+.google-btn i {
+margin-right: 10px;
+}
+
+p {
+text-align: center;
+margin-top: 20px;
+
+}
+
+a {
+color: #007bff;
+}
+
+.fa-google {
+background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+-webkit-text-fill-color: transparent;
+} 
+
+

@@ -1,0 +1,15 @@
+/* MainComponent.css */
+.main-container {
+    display: flex;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .content h1 {
+    margin-bottom: 20px;
+  }
+  

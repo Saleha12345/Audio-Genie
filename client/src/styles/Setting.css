@@ -1,0 +1,72 @@
+
+.settings-container {
+  font-family: Arial, sans-serif;
+}
+.theme-settings {
+  margin-bottom: 20px;
+}
+
+.theme-settings input[type="radio"] {
+  margin-right: 10px;
+}
+.font-size-settings {
+  margin-bottom: 20px;
+}
+
+.notification-settings {
+  margin-bottom: 20px;
+}
+
+.checkbox-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.app-info {
+  margin-bottom: 20px;
+}
+  
+.terms-and-privacy {
+  margin-bottom: 20px;
+}
+
+.popup-button {
+  background-color:  #0040B5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.close-button {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.popup-button:hover,
+.close-button:hover {
+  background-color: #555;
+}
+.eye-icon {
+  cursor: pointer; 
+}
+.font-size-settings select {
+  position: relative;
+}
