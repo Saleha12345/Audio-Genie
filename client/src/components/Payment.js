@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import creditCardType from 'credit-card-type';
@@ -8,15 +9,12 @@ import "../styles/Payment.css";
 const Payment = () => {
   const history = useNavigate();
   const { signupDetails } = useUser();
-  const { username, email, password, country, plan, price } = signupDetails;
+  const { username, email, password, country,plan, price } = signupDetails;
   const [cardNumber, setCardNumber] = useState('');
   const [cardholderName, setCardholderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCVV] = useState('');
   const [cardType, setCardType] = useState('');
-  const [cardNumberError, setCardNumberError] = useState('');
-  const [expiryDateError, setExpiryDateError] = useState('');
-  const [cvvError, setCVVError] = useState('');
 
   const handleCardNumberChange = (e) => {
     const newCardNumber = e.target.value;
@@ -26,10 +24,8 @@ const Payment = () => {
     const cardTypeInfo = creditCardType(newCardNumber);
     if (cardTypeInfo.length > 0) {
       setCardType(cardTypeInfo[0].niceType);
-      setCardNumberError('');
     } else {
       setCardType('');
-      setCardNumberError('Card type could not be detected');
     }
   };
 
@@ -37,50 +33,20 @@ const Payment = () => {
     const newCardholderName = e.target.value;
     setCardholderName(newCardholderName);
   };
+
   const handleExpiryDateChange = (e) => {
     const newExpiryDate = e.target.value;
-    if (!/^\d{0,2}\/?\d{0,2}$/.test(newExpiryDate)) {
-      setExpiryDateError('Expiry date should be in MM/YY format and contain numbers only');
-      return;
-    }
     setExpiryDate(newExpiryDate);
-    const currentDate = new Date();
-    const [month, year] = newExpiryDate.split('/');
-    const expiry = new Date(`20${year}`, month - 1);
-    if (expiry < currentDate) {
-      setExpiryDateError('Expiry date cannot be in the past');
-    } else {
-      setExpiryDateError('');
-    }
   };
 
   const handleCVVChange = (e) => {
     const newCVV = e.target.value;
-    if (!/^\d+$/.test(newCVV)) {
-      setCVVError('CVV should contain numbers only');
-      return;
-    }
     setCVV(newCVV);
-    if (newCVV.length < 3) {
-      setCVVError('CVV must be 3 digits');
-    } else {
-      setCVVError('');
-    }
   };
 
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!cardNumber || !cardholderName || !expiryDate || !cvv) {
-      setCardNumberError('Card number is required');
-      setExpiryDateError('Expiry date is required');
-      setCVVError('CVV is required');
-      return;
-    }
-
-    if (cardNumberError || expiryDateError || cvvError) {
-      return;
-    }
 
     const paymentData = {
       username,
@@ -108,9 +74,12 @@ const Payment = () => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+
+      // Redirect to MainComponent after successful payment and signup
       history(`/MainComponent`);
     } catch (error) {
       console.error('Payment error:', error);
+      // Handle payment error (display error message, etc.)
     }
   };
 
@@ -121,21 +90,18 @@ const Payment = () => {
         <label>
           Card Number:
           <input type="text" value={cardNumber} onChange={handleCardNumberChange} maxLength="16" />
-          {cardNumberError && <p className="error-message">{cardNumberError}</p>}
         </label>
         <label>
           Cardholder Name:
           <input type="text" value={cardholderName} onChange={handleCardholderNameChange} />
         </label>
         <label>
-          Expiry Date (MM/YY):
+          Expiry Date:
           <input type="text" value={expiryDate} onChange={handleExpiryDateChange} maxLength="5" />
-          {expiryDateError && <p className="error-message">{expiryDateError}</p>}
         </label>
         <label>
           CVV:
           <input type="text" value={cvv} onChange={handleCVVChange} maxLength="3" />
-          {cvvError && <p className="error-message">{cvvError}</p>}
         </label>
         <p>Card Type: {cardType}</p>
         <button type="submit">Submit Payment and Complete Signup</button>

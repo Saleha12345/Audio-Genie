@@ -1,18 +1,23 @@
+/* Add any necessary styles here */
 
+/* settings-container styles */
 .settings-container {
   font-family: Arial, sans-serif;
 }
+
+/* theme-settings styles */
 .theme-settings {
   margin-bottom: 20px;
 }
 
-.theme-settings input[type="radio"] {
-  margin-right: 10px;
-}
+
+
+/* font-size-settings styles */
 .font-size-settings {
   margin-bottom: 20px;
 }
 
+/* notification-settings styles */
 .notification-settings {
   margin-bottom: 20px;
 }
@@ -22,6 +27,10 @@
   margin-bottom: 10px;
 }
 
+/* terms-and-privacy and popup styles */
+/* Add styles as per your existing implementation */
+
+/* app-info styles */
 .app-info {
   margin-bottom: 20px;
 }
@@ -43,12 +52,13 @@
 .popup {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 55%;
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  
 }
 
 .close-button {
@@ -65,7 +75,7 @@
   background-color: #555;
 }
 .eye-icon {
-  cursor: pointer; 
+  cursor: pointer; /* Change cursor to pointer when hovering over the eye icon */
 }
 .font-size-settings select {
   position: relative;

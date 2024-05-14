@@ -1,4 +1,6 @@
+/* AdminDashboard.css */
 
+/* Base styles */
 .admin-dashboard {
   padding: 20px;
   width: 100%;
@@ -35,7 +37,7 @@
 }
 
 .total-users-card img {
-  width: 40px; 
+  width: 40px; /* adjust size as needed */
   height: auto;
   margin-right: 10px;
 }
@@ -66,7 +68,7 @@
   margin-right:10px;
   padding-top: 20px;
 }
-
+/* Responsive styles */
 @media screen and (max-width: 768px) {
   .card {
     flex: 0 0 calc(50% - 20px);

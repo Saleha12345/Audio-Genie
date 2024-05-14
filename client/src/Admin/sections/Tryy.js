@@ -12,15 +12,9 @@ import IconButton from '@mui/material/IconButton';
 import BlockIcon from '@mui/icons-material/Block';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { green, yellow , red, blue, purple} from '@mui/material/colors';
+import { green, yellow , red} from '@mui/material/colors';
 
-const getRandomColor = () => {
-  const colors = [blue[500], green[500], yellow[500], purple[500]]; // Add more colors if needed
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex];
-};
-
-const User = () => {
+const Tryy = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -48,7 +42,6 @@ const User = () => {
       console.error('Error deleting user:', error);
     }
   };
-
   const toggleUserStatus = async (email, currentStatus) => {
     try {
       const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
@@ -64,8 +57,7 @@ const User = () => {
 
   return (
     <div>
-       <h1 style={{marginTop:'20px', marginBottom:'30px'}}>Users</h1>
-      <TableContainer component={Paper} style={{marginTop:'20px'}}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -73,14 +65,14 @@ const User = () => {
               <TableCell><b>Name</b></TableCell>
               <TableCell align="right"><b>Email</b></TableCell>
               <TableCell align="right"><b>Subscription Plan</b></TableCell>
-              <TableCell style={{paddingLeft:'80px'}}><b>Action</b></TableCell>
+              <TableCell align="right"><b>Action</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell>
-                  <Avatar sx={{ backgroundColor: getRandomColor() }}>{user.username.charAt(0)}</Avatar>
+                  <Avatar>{user.username.charAt(0)}</Avatar>
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {user.username}
@@ -89,9 +81,9 @@ const User = () => {
                 <TableCell align="right">{user.plan}</TableCell>
                 <TableCell align="right">
                   <Box display="flex">
-                    <IconButton onClick={() => deleteUser(user.email)}><DeleteIcon sx={{ color: red[500], marginLeft:'40px' }} /></IconButton>
+                  <IconButton onClick={() => deleteUser(user.email)}><DeleteIcon sx={{ color: red[500], marginRight:'-60px' }} /></IconButton>
                     <IconButton onClick={() => toggleUserStatus(user.email, user.status)}>
-                      <BlockIcon sx={{ color: user.status === 'active' ? yellow[500] : green[500] , marginLeft:'20px'}} />
+                      <BlockIcon sx={{ color: user.status === 'active' ? yellow[500] : green[500] , marginRight:'7px'}} />
                     </IconButton>
                   </Box>
                 </TableCell>
@@ -104,4 +96,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Tryy;

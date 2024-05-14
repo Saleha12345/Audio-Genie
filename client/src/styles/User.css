@@ -2,7 +2,7 @@
 .user-list {
   display: flex;
   flex-direction: column;
-  gap: 10px; 
+  gap: 10px; /* Adjust the gap between users */
 }
 
 .user-header {

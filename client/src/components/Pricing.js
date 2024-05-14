@@ -1,4 +1,5 @@
-import "../styles/SubscriptionPlan.css";
+// Import necessary React components and styles
+import "../styles/SubscriptionPlan.css"; // Import your stylesheet for this component
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
@@ -7,6 +8,7 @@ const Pricing = () => {
 
   return (
     <div className="subscription-plan-container">
+      {/* Header */}
       <div className="header">
         <div className="logo-container">
           <img src={require("../img/logo.png")} alt="Logo" className="logo" />
@@ -36,6 +38,7 @@ const Pricing = () => {
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="main-content">
         <h1>Your All-in-One Audio Solution</h1>
         <p>
@@ -43,8 +46,9 @@ const Pricing = () => {
           Heights and Unleash Your Audio Creativity
         </p>
 
+        {/* Subscription Plan Cards */}
         <div className="subscription-cards">
-
+          {/* Free Plan Card */}
           <div className="subscription-card free-plan">
             <h2 className="free_text">Basic</h2>
             <p className="price">Rs 300</p>
@@ -65,13 +69,14 @@ const Pricing = () => {
             <Link
               className="button-link"
               to={{
-                pathname: "/signup",
+                pathname: "/signup", // Include signupDetails and selectedPlan
               }}
             >
               Get Started
             </Link>
           </div>
 
+          {/* Standard Plan Card */}
           <div className="subscription-card standard-plan">
             <div className="best-value-box">Best Value</div>
             <h2 className="stand_text">Standard</h2>
@@ -96,13 +101,14 @@ const Pricing = () => {
             <Link
               className="button-link-stan"
               to={{
-                pathname: "/signup",
+                pathname: "/signup", // Include signupDetails and selectedPlan
               }}
             >
               Get Started
             </Link>
           </div>
 
+          {/* Premium Plan Card */}
           <div className="subscription-card premium-plan">
             <h2 className="prem_text">Premium</h2>
             <p className="price">
@@ -125,7 +131,7 @@ const Pricing = () => {
             <Link
               className="button-link"
               to={{
-                pathname: "/signup",
+                pathname: "/signup", // Include signupDetails and selectedPlan
               }}
             >
               Get Started

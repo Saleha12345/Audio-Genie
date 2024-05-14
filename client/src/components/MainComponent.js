@@ -56,11 +56,12 @@ const MainComponent = () => {
   }
 
   return (
-    <div className="main-container">
-      <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick} />    
-      <div className="content" style={{ marginLeft: isOpen ? '250px' : '0' , marginTop:'-15px'}}>
-        <ButtonAppBar/>  
+    <div className="main-container" style={{padding:'20px'}}>
+      <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick}/>    
+      <div className="content" style={{ marginLeft: isOpen ? '250px' : '0' , marginTop:'-15px', width:'600px'}}>
+        {/* <ButtonAppBar/>   */}
         {sectionComponent}
+        
       </div>
     </div>
   );

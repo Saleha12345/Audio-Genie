@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Link, Navigate } from 'react-router-dom';
 import '../styles/Login.css';
 import image from '../img/talking.jpg';
-import { useNavigate } from 'react-router-dom';
-import { useUser } from './UserContext';
+import {useNavigate} from 'react-router-dom';
+import { useUser } from './UserContext'; 
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -31,29 +31,31 @@ const Login = () => {
   const [showModal, setShowModal] = useState(false);
 
   const history = useNavigate();
-  var { signupDetails, setSignupDetails } = useUser();
+ var { signupDetails, setSignupDetails } = useUser();
 
   const handleSubmit = async (event) => {
-
+    
     event.preventDefault();
     if (email === 'admin@gmail.com' && password === 'admin1234') {
       history('/admin');
-      return;
+      return; // Prevent further execution of the function
     }
     try {
       const response = await axios.post('http://localhost:3001/login', { email, password });
-
-      signupDetails = response.data.userData;
-
+      
+      signupDetails= response.data.userData;
+      
       console.log(signupDetails);
-      setSignupDetails(signupDetails);
+    // Now you can use userData in your application
+    setSignupDetails(signupDetails);
       setLoginSuccess(true);
     } catch (error) {
       if (error.response && error.response.status === 403) {
-
+        // Show modal for suspended account
         setShowModal(true);
-      }
+      } 
       if (error.response.status === 401) {
+        // Incorrect password, show alert to the user
         alert('Incorrect password. Please try again.');
       }
       else {
@@ -63,6 +65,7 @@ const Login = () => {
   };
 
   if (loginSuccess) {
+    // Redirect to the login page on successful login
     history(`/MainComponent`);
   }
 
@@ -72,15 +75,16 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="left-half">
-        <img src={image} alt="Left Half Image" className="left-image" />
-      </div>
+     <div className="left-half">
+      {/* Image or any content for the left half */}
+      <img src={image} alt="Left Half Image" className="left-image" />
+    </div>
       <div className="right-half login-form">
         <h2>Log In</h2>
         <form onSubmit={(event) => handleSubmit(event)}>
           <div className="form-group">
             <label>
-              <i className="fas fa-envelope"></i>
+              <i className="fas fa-envelope"></i> {/* Font Awesome icon for email */}
               Email:
               <input
                 type="email"
@@ -94,7 +98,7 @@ const Login = () => {
           </div>
           <div className="form-group">
             <label>
-              <i className="fas fa-lock"></i>
+              <i className="fas fa-lock"></i> {/* Font Awesome icon for password */}
               Password:
               <input
                 type="password"
@@ -110,20 +114,20 @@ const Login = () => {
           {error && <p>{error}</p>}
         </form>
         <Modal
-          open={showModal}
-          onClose={closeModal}
-          aria-labelledby="account-suspended-title"
-          aria-describedby="account-suspended-description"
-        >
-          <Box sx={style}>
-            <h2 id="account-suspended-title">Account Suspended</h2>
-            <p id="account-suspended-description">
-              Your account is suspended. Please contact support for assistance.
-            </p>
-            <Button onClick={closeModal}>Close</Button>
-          </Box>
-        </Modal>
-        <p>
+        open={showModal}
+        onClose={closeModal}
+        aria-labelledby="account-suspended-title"
+        aria-describedby="account-suspended-description"
+      >
+        <Box sx={style}>
+          <h2 id="account-suspended-title">Account Suspended</h2>
+          <p id="account-suspended-description">
+            Your account is suspended. Please contact support for assistance.
+          </p>
+          <Button onClick={closeModal}>Close</Button>
+        </Box>
+      </Modal>
+      <p>
           Don't have an account? <Link to="/signup">Sign up</Link> | <Link to="/ForgotPassword">Forgot Password?</Link>
         </p>
       </div>

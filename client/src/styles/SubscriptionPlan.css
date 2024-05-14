@@ -1,6 +1,6 @@
 /* SubscriptionPlan.css */
-@import '~@fortawesome/fontawesome-free/css/all.css';
 
+/* General styles */
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #F9F5FF;
@@ -24,22 +24,20 @@ body {
 }
 
 .logo {
-  width: 100%;
-  margin-right: 10px;
-  height:100%;
+  width: 80px;
+  height: auto;
   
 }
 .logo-container{
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right:550px;
   justify-content: space-between;
   
 }
 
 .logo-text {
-  margin-left: 10px; 
+  margin-left: 10px; /* Adjust the margin to control the space between logo and text */
   font-weight: bold;
   font-size: 20px;
   color: black;
@@ -49,7 +47,8 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 20px;
+ 
+
 }
 .header-links a {
   margin-right: 20px;
@@ -57,8 +56,6 @@ body {
   color: #0040B5;
   font-weight: bold;
 }
-
-
 
 .log_btn{
   background-color: #0040B5;
@@ -68,6 +65,7 @@ body {
   padding-inline: 30px;
   
  }
+/* Main content styles */
 .main-content {
   text-align: center;
   margin-top: 30px;
@@ -84,6 +82,7 @@ p {
   margin-bottom: 100px;
 }
 
+/* Subscription Card styles */
 .subscription-cards {
   
   display: flex;
@@ -142,7 +141,7 @@ button {
 }
 
 
-
+/* Subscription Card styles */
 .subscription-card {
   border-radius: 20px;
   padding: 20px;
@@ -245,14 +244,18 @@ button:hover {
   color: #000;
 }
 
+/* Add light shadow on the cards */
 .subscription-card:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Round the edges of Get Started button */
 button {
   border-radius: 8px;
 }
+/* ... (previous styles) */
 
+/* Card specific styles */
 .standard-plan {
   position: relative;
   border-color: #2ecc71;
@@ -265,7 +268,7 @@ button {
   position: absolute;
   top: 0;
   left: 20px;
-  background-color: #FFD700;
+  background-color: #FFD700; /* Yellow color */
   color: #000;
   padding: 5px 10px;
   font-size: 12px;
@@ -273,6 +276,9 @@ button {
 }
 
 
+
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .subscription-card {
     width: 100%;

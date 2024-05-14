@@ -1,24 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import '../../styles/themes.css';
-import '../../styles/Setting.css';
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import "../../styles/themes.css";
+import "../../styles/Setting.css";
+import { light } from "@mui/material/styles/createPalette";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const Setting = () => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
+    return localStorage.getItem("theme") || "light";
   });
   const handleThemeChange = (selectedTheme) => {
     setTheme(selectedTheme);
   };
 
   useEffect(() => {
-    document.documentElement.classList.remove('light-theme', 'dark-theme');
-    document.documentElement.classList.add(theme + '-theme');
-    localStorage.setItem('theme', theme);
+    document.documentElement.classList.remove("light-theme", "dark-theme");
+    document.documentElement.classList.add(theme + "-theme");
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
- 
   const [fontSize, setFontSize] = useState(() => {
-    return localStorage.getItem('fontSize') || 'medium';
+    return localStorage.getItem("fontSize") || "medium";
   });
 
   const [notificationPrefs, setNotificationPrefs] = useState({
@@ -35,22 +49,21 @@ const Setting = () => {
   };
   useEffect(() => {
     document.body.className = `${theme}-theme`;
-    localStorage.setItem('theme', theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
     document.body.style.fontSize = fontSize;
-    localStorage.setItem('fontSize', fontSize);
+    localStorage.setItem("fontSize", fontSize);
   }, [fontSize]);
 
- 
   const handleFontSizeChange = (selectedFontSize) => {
     setFontSize(selectedFontSize);
   };
   const toggleTermsPopup = () => {
     setShowTerms(!showTerms);
   };
-  
+
   const togglePrivacyPopup = () => {
     setShowPrivacy(!showPrivacy);
   };
@@ -60,7 +73,7 @@ const Setting = () => {
       ...prevPrefs,
       [name]: checked,
     }));
-  
+
     if (checked) {
       alert(`Receive alerts for ${name}`);
     }
@@ -70,112 +83,112 @@ const Setting = () => {
     }
   };
 
-
   return (
     <div className="settings-container">
-      <h1>Settings</h1>
+      <h1 style={{ marginBottom: "30px" }}>Settings</h1>
       <div className="theme-settings">
-        <h3>Theme Preferences</h3>
-        <div>
-          <input
-            type="radio"
-            id="light"
-            name="theme"
-            value="light"
-            checked={theme === 'light'}
-            onChange={() => handleThemeChange('light')}
-          />
-          <label htmlFor="light">Light</label>
+        {/* <h3>Theme Preferences</h3> */}
+        <Box sx={{ minWidth: 120 }} style={{ marginBottom: "20px" }}>
+          <FormControl fullWidth>
+            <InputLabel
+              id="demo-simple-select-label"
+              style={{ fontWeight: "bold", fontSize: "16px", color: "black" }}
+            >
+              Theme
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={theme}
+              label="Theme"
+              onChange={(e) => handleThemeChange(e.target.value)}
+            >
+              <MenuItem value="light">Light</MenuItem>
+              <MenuItem value="dark">Dark</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        <div className="font-size-settings">
+          {/* <h3>Font Size</h3> */}
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ fontWeight: "bold", fontSize: "16px", color: "black" }}
+              >
+                Font Size
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={fontSize}
+                label="Font Size"
+                onChange={(e) => handleFontSizeChange(e.target.value)}
+              >
+                <MenuItem value="small">Small</MenuItem>
+                <MenuItem value="medium">Medium</MenuItem>
+                <MenuItem value="large">Large</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </div>
-        <div>
-          <input
-            type="radio"
-            id="dark"
-            name="theme"
-            value="dark"
-            checked={theme === 'dark'}
-            onChange={() => handleThemeChange('dark')}
-          />
-          <label htmlFor="dark">Dark</label>
-        </div>
-      </div>
-      <div className="font-size-settings">
-        <h3>Font Size</h3>
-        <select value={fontSize} onChange={(e) => handleFontSizeChange(e.target.value)}>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-        </select>
       </div>
       <div className="notification-settings">
-        <h3>Notification Preferences</h3>
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            name="speakerAnalysisAlerts"
-            checked={notificationPrefs.speakerAnalysisAlerts}
-            onChange={handleNotificationPrefChange}
+        <h3 style={{ marginBottom: "20px" }}>Notification Preferences</h3>
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Receive alerts for completed speaker analyses"
           />
-          Receive alerts for completed speaker analyses
-        </label>
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            name="systemUpdates"
-            checked={notificationPrefs.systemUpdates}
-            onChange={handleNotificationPrefChange}
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Receive system update notifications"
           />
-          Receive system update notifications
-        </label>
-        </div>
-        <div className="terms-and-privacy">
-  <h3>Terms and Privacy</h3>
-  <button className="popup-button" onClick={toggleTermsPopup}>
-    View Terms
-  </button>
-  {showTerms && (
-    <div className="popup">
-      <p>This is where the Terms and Conditions would appear.</p>
-      <button className="close-button" onClick={toggleTermsPopup}>
-        Close
-      </button>
-    </div>
-  )}
-  <button className="popup-button" onClick={togglePrivacyPopup}>
-    View Privacy Policy
-  </button>
-  {showPrivacy && (
-    <div className="popup">
-     <p>This is where the Privacy Policy would appear.</p>
-      <button className="close-button" onClick={togglePrivacyPopup}>
-        Close
-      </button>
-    </div>
-  )}
-</div>
-<div className="app-info">
-        {/* App Information heading with eye icon */}
-        <h3>
-          App Information{' '}
-          {/* Eye icon button for toggling app information */}
-          <span className="eye-icon" onClick={toggleAppInfo}>
-            {appInfoVisible ? '🔽' : '🔼'}
-          </span>
-        </h3>
-        {/* Conditionally render app information */}
-        {appInfoVisible && (
-          <div className="info-details">
-            
-            <p>Changelog for AudioGenie Project:
-
-<h3>Version 1.0.0 (Release Year: [2023])</h3>
-
-</p>
+        </FormGroup>
+      </div>
+      <div className="terms-and-privacy">
+        <h3 style={{ marginBottom: "20px" }}>Terms and Privacy</h3>
+        <button className="popup-button" onClick={toggleTermsPopup}>
+          View Terms
+        </button>
+        {showTerms && (
+          <div className="popup">
+            <p style={{textAlign:'left'}}>
+              Subscription fees apply for full access. Users responsible for
+              uploaded content. Admin monitors and manages user accounts.
+            </p>
+            <button className="close-button" onClick={toggleTermsPopup}>
+              Close
+            </button>
+          </div>
+        )}
+        <button className="popup-button" onClick={togglePrivacyPopup}>
+          View Privacy Policy
+        </button>
+        {showPrivacy && (
+          <div className="popup">
+            <p style={{textAlign:'left'}}>
+              We respect your privacy and safeguard any personal information you
+              provide while using our platform. We do not share your data with
+              third parties without your consent, and we employ robust security
+              measures to protect against unauthorized access or misuse of your
+              information. By using Audio Genie, you agree to our privacy policy
+              and trust us to handle your data responsibly and ethically.
+            </p>
+            <button className="close-button" onClick={togglePrivacyPopup}>
+              Close
+            </button>
           </div>
         )}
       </div>
+
+      <div className="app-info">
+        <h3 style={{ marginBottom: "20px" }}>App Information </h3>
+        <div>Changelog for AudioGenie Project: Version 1.0.0 (© 2023)</div>
       </div>
-      );
+    </div>
+  );
 };
 
 export default Setting;

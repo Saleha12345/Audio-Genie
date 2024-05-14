@@ -33,12 +33,14 @@ const Admin = () => {
   }
 
   return (
+   
     <div className="main-container">
+      
     <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick} />
 
       
       <div className="content" style={{ marginLeft: isOpen ? '250px' : '0', marginTop:'-15px'}}>
-        <ButtonAppBar />
+        
         {sectionComponent}
       </div>
     </div>

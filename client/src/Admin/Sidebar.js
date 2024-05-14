@@ -13,12 +13,25 @@ const Sidebar = ({ isOpen, toggle, handleMenuClick, currentSection }) => {
     setActiveOption(section);
     handleMenuClick(section);
   };
+  const sidebarStyle = {
+    width: '250px',
+    height: '100%',
+    borderRadius: '7px',
+    marginLeft: '10px',
+    overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+    backgroundColor: '#0040B5',
+    padding: '20px',
+    marginTop: '10px',
+  };
 
   return (
     <div className='sidebarContainer'>
-    <div className={isOpen ? 'sidebar open' : 'sidebar'}>
-      <div className="">
-        <div className="logo-container" style={{marginTop:'20px'}}>
+    <div className={isOpen ? 'sidebar open' : 'sidebar'}  style={sidebarStyle}>
+      <div className="sidebar-header">
+        <div className="logo-container">
           <img src={require('../img/logo-2.png')} alt="Logo" className="logo" />
         </div>
         <p style={{ fontWeight: 'bold', color: '#fff' }}>AudioGenie</p>
@@ -26,13 +39,13 @@ const Sidebar = ({ isOpen, toggle, handleMenuClick, currentSection }) => {
       <ul className="sidebar-menu">
         <li
           onClick={() => handleClick('Dashboard')}
-          className={activeOption === 'Dashboard' ? 'active' : ''} style={{marginTop:'-10px'}}
+          className={activeOption === 'Dashboard' ? 'active' : ''} style={{marginTop:'-10px', marginBottom:'20px'}}
         >
           <DashboardIcon style={{marginRight:'5px'}}/> Dashboard
         </li>
         <li
           onClick={() => handleClick('User')}
-          className={activeOption === 'User' ? 'active' : ''} style={{marginTop:'-10px'}}
+          className={activeOption === 'User' ? 'active' : ''} style={{marginTop:'-10px', marginBottom:'20px'}}
         >
           <PersonIcon style={{marginRight:'5px'}}/> Users
         </li>

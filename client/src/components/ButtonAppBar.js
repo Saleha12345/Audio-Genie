@@ -29,26 +29,7 @@ export default function ButtonAppBar() {
       }}
       
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      
     </Menu>
   );
 
@@ -64,9 +45,9 @@ export default function ButtonAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              {/* <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
-              </Badge>
+              </Badge> */}
             </IconButton>
             <IconButton
               size="large"
@@ -77,7 +58,7 @@ export default function ButtonAppBar() {
             
               color="inherit"
             >
-             <Avatar alt="Saleha" src="/static/images/avatar/2.jpg" style={{backgroundColor:'purple'}} />
+             <Avatar alt="Zulal" src="/static/images/avatar/2.jpg" style={{backgroundColor:'purple'}} />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

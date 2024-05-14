@@ -1,26 +1,27 @@
+// Import useState hook
 import React, { useState } from 'react';
 import { useUser } from '../UserContext';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { FaEye, FaEyeSlash, FaPencilAlt } from 'react-icons/fa'; 
-import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash, FaPencilAlt } from 'react-icons/fa'; // Import eye and pencil icons from react-icons library
 import '../../styles/EditPassword.css';
 
 const EditProfile = () => {
-  const history = useNavigate();
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const { signupDetails, setSignupDetails } = useUser();
+
+  // Initialize state variables to hold edited user data and flag for changes
   const [editedUserData, setEditedUserData] = useState({
     username: signupDetails.username,
     email: signupDetails.email,
     password: signupDetails.password,
-    newPassword: '', 
+    newPassword: '', // New password field
   });
   const [changesMade, setChangesMade] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [editingField, setEditingField] = useState(null);
-  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false); // State to track update success
 
+  // Effect to check for changes in user data
   useEffect(() => {
     const isUserDataChanged = Object.keys(editedUserData).some(
       key => editedUserData[key] !== signupDetails[key]
@@ -28,43 +29,55 @@ const EditProfile = () => {
     setChangesMade(isUserDataChanged);
   }, [editedUserData, signupDetails]);
 
+  // Function to handle changes in input fields
   const handleInputChange = e => {
     const { name, value } = e.target;
     setEditedUserData({ ...editedUserData, [name]: value });
   };
 
+  // Function to handle toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  // Function to handle edit action
   const handleEdit = (fieldName) => {
-    setEditingField(fieldName);
+    setEditingField(fieldName); // Set the field currently being edited
+    // If editing current password, set new password field to the new password
     if (fieldName === 'password') {
       setEditedUserData(prevState => ({
         ...prevState,
-        newPassword: '', 
-        password: signupDetails.password, 
+        newPassword: '', // Clear new password
+        password: signupDetails.password, // Set current password
       }));
     }
   };
 
-
+  // Function to handle update button click
   const handleUpdate = async () => {
     try {
+      // Extract only the required fields for update
       const { username, email , newPassword } = editedUserData;
+
+      // Make a POST request to the server to update user profile
       const response = await axios.post('http://localhost:3001/update', { username, newPassword, email });
 
       if (response.status === 200) {
+        // Show success alert
         alert('Profile updated successfully!');
+        // Clear new password field
         setEditedUserData({
           ...editedUserData,
-          password: newPassword, 
-          newPassword: '',
+          password: newPassword, // Update password field
+          newPassword: '', // Clear new password field
         });
-
+        
+        // Reset editing field
         setEditingField(null);
+        // Set update success flag
         setUpdateSuccess(true);
       } else {
+        // Show error alert
         alert('Failed to update profile. Please try again.');
       }
     } catch (error) {
@@ -72,27 +85,6 @@ const EditProfile = () => {
       alert('Failed to update profile. Please try again.');
     }
   };
-  const handleDeleteProfile = async () => {
-    console.log("Delete profile button clicked");
-    const isConfirmed = window.confirm('Are you sure you want to delete your profile? This action cannot be undone.');
-    if (isConfirmed) {
-      try {
-        const response = await axios.post('http://localhost:3001/delete-profile', { email: signupDetails.email });
-  
-        if (response.status === 200) {
-          alert('Profile deleted successfully!');
-          history('/');
-        } else {
-          alert('Failed to delete profile. Please try again.');
-        }
-      } catch (error) {
-        console.error('Delete profile error:', error);
-        alert('Failed to delete profile. Please try again.');
-      }
-    }
-  };
-  
-
 
   return (
     <div>
@@ -158,19 +150,6 @@ const EditProfile = () => {
       <button onClick={handleUpdate} disabled={!changesMade} style={{padding:'15px', width:'100%', marginTop:'20px'}}> 
         Update
       </button>
-      <button onClick={handleDeleteProfile} style={{ backgroundColor: 'red', color: 'white', padding: '15px', width: '100%', marginTop: '20px' }}> 
-        Delete Profile
-      </button>
-
-      {/* Confirmation modal */}
-      {isConfirmationOpen && (
-        <div className="confirmation-modal">
-          <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
-          <div>
-            <button onClick={handleDeleteProfile}>Yes, Delete</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

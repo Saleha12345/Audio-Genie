@@ -8,6 +8,16 @@ import { FileUploader } from "react-drag-drop-files";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/Download";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import LinearProgress from "@mui/material/LinearProgress";
+import { useDropzone } from "react-dropzone";
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+import backgroundImage from "../img/8503.jpg";
 import { useUser } from './UserContext';
 
 const fileTypes = ["WAV"];
@@ -23,9 +33,7 @@ const AudioSeparationForm = ({ username }) => {
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [transcriptionResults, setTranscriptionResults] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-
-  const [audioFileInfo, setAudioFileInfo] = useState("");
-
+  const [uploadStatus, setUploadStatus] = useState(null); 
 
   const canvasRef = useRef([]);
   const audioRef = useRef([]);
@@ -35,32 +43,9 @@ const AudioSeparationForm = ({ username }) => {
   const { signupDetails } = useUser();
   const { email } = signupDetails;
 
-  const handleFileChange = async (file) => {
-    const { name, type } = file;
-    const currentDate = new Date();
-  
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const fileContent = event.target.result;
-  
-      try {
-        // Send file information to backend MongoDB
-        await axios.post("http://localhost:3001/savefiles", {
-          name: name,
-          date: currentDate,
-          type: type,
-          email: email,
-          content: fileContent // Send file content as base64 string
-        });
-        console.log("File information sent to backend MongoDB.");
-      } catch (error) {
-        console.error("Error sending file information to backend MongoDB:", error);
-      }
-    };
-  
-    reader.readAsDataURL(file); // Read file as base64 data
-  };
-
+  // const handleFileChange = (file) => {
+  //   setAudioFile(file);
+  // };
   const handleMuteToggle = (index) => {
     const newMuted = [...muted];
     newMuted[index] = !newMuted[index]; // Toggle mute status for the corresponding track
@@ -83,17 +68,22 @@ const AudioSeparationForm = ({ username }) => {
       formData.append("audio", audioFile);
 
       const response = await axios.post(
-        " https://9ce4-34-23-254-151.ngrok-free.app/separate",
+        " https://75b9-34-73-77-170.ngrok-free.app/separate",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
           onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setProgress(percentCompleted);
+            // Simulate slow loading by updating progress every 100ms
+            let progress = 0;
+            const interval = setInterval(() => {
+              progress += 1;
+              setProgress(progress);
+              if (progress >= 100) {
+                clearInterval(interval);
+              }
+            }, 2500);
           },
         }
       );
@@ -140,7 +130,7 @@ const AudioSeparationForm = ({ username }) => {
         const transcribeFormData = new FormData();
         transcribeFormData.append("audio", formattedAudioTracks[i]);
         const transcriptionResponse = await axios.post(
-          " https://9ce4-34-23-254-151.ngrok-free.app/transcribe",
+          " https://75b9-34-73-77-170.ngrok-free.app/transcribe",
           transcribeFormData,
           {
             headers: {
@@ -166,7 +156,7 @@ const AudioSeparationForm = ({ username }) => {
         formDataSegmentation.append("audio", formattedAudioTracks[i]);
 
         const segmentationResponse = await axios.post(
-          " https://9ce4-34-23-254-151.ngrok-free.app/segment",
+          " https://75b9-34-73-77-170.ngrok-free.app/segment",
           formDataSegmentation,
           {
             headers: {
@@ -361,10 +351,22 @@ const AudioSeparationForm = ({ username }) => {
         datasets: [
           {
             data: [maleCount, femaleCount, noEnergyCount],
-            backgroundColor: ["#ff6384", "#36a2eb", "#ffce56"],
+            backgroundColor: ["#36a2eb", "#ff6384", "#ffce56"],
           },
         ],
       },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Gender Distribution'
+          }
+        }
+      }
     });
 
     const barChartContainer = document.getElementById("bar-chart-container");
@@ -392,12 +394,23 @@ const AudioSeparationForm = ({ username }) => {
           },
         ],
       },
+      
       options: {
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,
           },
         },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Speaker Timeline'
+          }
+        }
       },
     });
   };
@@ -465,8 +478,105 @@ const AudioSeparationForm = ({ username }) => {
     setSearchKeyword(event.target.value);
   };
 
+  // const handleFileChange = (file) => {
+  //   if (file && file.type === 'audio/wav') {
+  //     setAudioFile(file);
+  //     setUploadStatus('success');
+  //   } else {
+  //     setUploadStatus('error');
+  //   }
+    
+    
+  // };
+
+  const handleFileChange = async (file) => {
+    const { name, type } = file;
+    const currentDate = new Date();
+  
+    if (file && file.type === 'audio/wav') {
+      // Set upload status to 'success' if the file is a .wav audio file
+      
+      setUploadStatus('success');
+      setAudioFile(file); // Store the file in state if needed
+  
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const fileContent = event.target.result;
+  
+        try {
+          // Send file information to backend MongoDB
+          await axios.post("http://localhost:3001/savefiles", {
+            name: name,
+            date: currentDate,
+            type: type,
+            email: email, // Assuming 'email' is defined in your component
+            content: fileContent // Send file content as base64 string
+          });
+          console.log("File information sent to backend MongoDB.");
+        } catch (error) {
+          console.error("Error sending file information to backend MongoDB:", error);
+        }
+      };
+  
+      reader.readAsDataURL(file); // Read file as base64 data
+    } else {
+      // Set upload status to 'error' if the file is not a .wav audio file
+      setUploadStatus('error');
+    }
+  };
+ 
+
+  const onDrop = (acceptedFiles) => {
+    // Handle dropped files here
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      handleFileChange(acceptedFiles[0]); // Assuming you handle only the first dropped file
+    }
+  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop,  multiple: false,  accept: 'audio/wav' });
+
   return (
     <div>
+      <div className="fileuploadercontainer" style={{ marginTop: "20px" }}>
+        <div
+          {...getRootProps()}
+          style={{
+            border: "2px dashed black",
+            borderRadius: "8px",
+            padding: "20px",
+            textAlign: "center",
+            backgroundColor: isDragActive ? "#f7f7f7" : "#ffffff",
+            backgroundImage: `url(${backgroundImage})`, // Set background image URL
+            backgroundSize: "90% 140%" ,
+            height: "300px", // Adjust the height of the drop zone
+            position: "relative", // Ensure position is relative for absolute positioning of content
+          }}
+        >
+          <input {...getInputProps()}  handleChange={handleFileChange} type="audioFile" types={fileTypes}/>
+          {isDragActive ? (
+            <p>Drop the audio file here...</p>
+          ) : (
+            <p>Drag and drop audio file here, or click to select file</p>
+          )}
+        </div>
+      </div>
+      <div style={{marginBottom:'10px', marginTop:'5px'}}>
+      {/* Conditionally render success or error message using the Alert component */}
+      {uploadStatus === 'success' && (
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          File upload successfully!
+        </Alert>
+      )}
+
+      {uploadStatus === 'error' && (
+        <Alert severity="error">
+          Error: Please upload a .wav audio file.
+        </Alert>
+      )}
+
+      {/* Your file uploader component and other content */}
+      
+    </div>
+
       <input
         type="text"
         placeholder="Enter keyword to search..."
@@ -476,13 +586,13 @@ const AudioSeparationForm = ({ username }) => {
       />
 
       {/* File uploader component */}
-      <div className="file-uploader-container" style={{ marginTop: "20px" }}>
-        <FileUploader
+      <div className="fileuploadercontainer" style={{ marginTop: "0px" }}>
+        {/* <FileUploader
           handleChange={handleFileChange}
           name="file"
           type="audioFile"
           types={fileTypes}
-        />
+        /> */}
       </div>
 
       {/* Separate and segment audio button */}
@@ -496,13 +606,13 @@ const AudioSeparationForm = ({ username }) => {
           borderColor: "#002366",
         }}
       >
-        Separate and Segment Audio
+        Separate
       </button>
 
-      {/* Circular progress bar */}
+      {/* Loading bar */}
       {loading && (
-        <div style={{ width: "50px", height: "50px" }}>
-          <CircularProgressbar value={progress} text={`${progress}%`} />
+        <div style={{ width: "100%", marginTop: "20px" }}>
+          <LinearProgress variant="determinate" value={progress} />
         </div>
       )}
 
@@ -600,7 +710,7 @@ const AudioSeparationForm = ({ username }) => {
                 <button
                   onClick={() => handleMuteToggle(index)}
                   style={{
-                    marginLeft: "20px",
+                    marginLeft: "-2px",
                     display: "flex",
                     flexDirection: "row",
                     paddingTop: "10px",
@@ -619,7 +729,8 @@ const AudioSeparationForm = ({ username }) => {
                 <button
                   onClick={() => handleDownload(audioData, index)}
                   style={{
-                    marginLeft: "10px",
+                    marginLeft: "-7px",
+                    marginRight: "-5px",
                     display: "flex",
                     flexDirection: "row",
                     paddingTop: "10px",
@@ -646,53 +757,63 @@ const AudioSeparationForm = ({ username }) => {
             </div>
           )}
           {/* Display transcription results for current track */}
-          <div style={{ marginLeft: "20px" }}>
-            <h2>Transcription Results for Track {index + 1}:</h2>
+          <div style={{ marginRight: "10px", marginLeft: "-250px" }}>
             {transcriptionResults[index] && (
-  <div>
-    {/* Filter items that contain the search keyword */}
-    {transcriptionResults[index].filter(item =>
-      item.text.toLowerCase().includes(searchKeyword.toLowerCase())
-    ).map((item, subIndex) => (
-      <div key={subIndex}>
-        <p>
-          <strong>Start Time:</strong> {item.start}s
-        </p>
-        <p>
-          <strong>End Time:</strong> {item.end}s
-        </p>
-        {/* Render the transcription text with highlighted keyword */}
-        <p>
-          <strong>Transcription Text:</strong>{" "}
-          {item.text.split(new RegExp(`(${searchKeyword})`, 'gi')).map((part, i) => (
-            part.toLowerCase() === searchKeyword.toLowerCase() ? (
-              <mark key={i}>{part}</mark>
-            ) : (
-              <React.Fragment key={i}>{part}</React.Fragment>
-            )
-          ))}
-        </p>
-      </div>
-    ))}
-    {/* Render items that do not contain the search keyword */}
-    {transcriptionResults[index].filter(item =>
-      !item.text.toLowerCase().includes(searchKeyword.toLowerCase())
-    ).map((item, subIndex) => (
-      <div key={subIndex}>
-        <p>
-          <strong>Start Time:</strong> {item.start}s
-        </p>
-        <p>
-          <strong>End Time:</strong> {item.end}s
-        </p>
-        <p>
-          <strong>Transcription Text:</strong> {item.text}
-        </p>
-      </div>
-    ))}
-  </div>
-)}
-
+              <div style={{ marginRight: "10px" }}>
+                {/* Filter items that contain the search keyword */}
+                {transcriptionResults[index].map((item, subIndex) => (
+                  <Accordion key={subIndex}>
+                    <AccordionSummary
+                      expandIcon={<ArrowDownwardIcon />}
+                      aria-controls={`panel${subIndex + 1}-content`}
+                      id={`panel${subIndex + 1}-header`}
+                    >
+                      <Typography style={{ color: "black" }}>
+                        Transcript
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails style={{ width: "200px" }}>
+                      <div>
+                        <div  style={{ color: "green"}}>
+                          <strong
+                            style={{ color: "green", paddingRight: "10px"}}
+                          >
+                            Start Time:
+                          </strong>{" "}
+                          {item.start}s
+                        </div>
+                        <div style={{ color: "red" }}>
+                          <strong
+                            style={{ color: "red", paddingRight: "10px" }}
+                          >
+                            End Time:
+                          </strong>{" "}
+                          {item.end}s
+                        </div>
+                        {/* Render the transcription text with highlighted keyword */}
+                        <div>
+                          <strong
+                            style={{ color: "gray", paddingRight: "10px" }}
+                          >
+                            Transcription Text:
+                          </strong>{" "}
+                          {item.text
+                            .split(new RegExp(`(${searchKeyword})`, "gi"))
+                            .map((part, i) =>
+                              part.toLowerCase() ===
+                              searchKeyword.toLowerCase() ? (
+                                <mark key={i}>{part}</mark>
+                              ) : (
+                                <React.Fragment key={i}>{part}</React.Fragment>
+                              )
+                            )}
+                        </div>
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       ))}
@@ -708,7 +829,7 @@ const AudioSeparationForm = ({ username }) => {
           borderColor: "#002366",
         }}
       >
-        Visualize Segmentation Data
+        Visualize
       </button>
       <button
         onClick={handleConcatenateAndDownload}
@@ -729,10 +850,11 @@ const AudioSeparationForm = ({ username }) => {
           borderColor: "#002366", // Border color
         }}
       >
-        Concatenate and Download Selected Tracks
+        Download
       </button>
 
       <div style={{ display: "flex", flexDirection: "row" }}>
+       
         <div
           id="bar-chart-container"
           style={{
@@ -743,20 +865,23 @@ const AudioSeparationForm = ({ username }) => {
             padding: "10px",
             marginRight: "10px",
           }}
-        ></div>
+        >  </div> 
+      
         <div
           id="pie-chart-container"
           style={{
             width: "400px",
+            height:'300px',
             backgroundColor: "white",
             borderRadius: "5px",
             padding: "10px",
+            paddingLeft:'60px'
           }}
         ></div>
       </div>
-      <div>
+      {/* <div>
         <button onClick={separateAndSegmentAudio}>Transcribe</button>
-      </div>
+      </div> */}
     </div>
   );
 };
