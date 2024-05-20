@@ -43,9 +43,6 @@ const AudioSeparationForm = ({ username }) => {
   const { signupDetails } = useUser();
   const { email } = signupDetails;
 
-  // const handleFileChange = (file) => {
-  //   setAudioFile(file);
-  // };
   const handleMuteToggle = (index) => {
     const newMuted = [...muted];
     newMuted[index] = !newMuted[index]; // Toggle mute status for the corresponding track
@@ -139,11 +136,10 @@ const AudioSeparationForm = ({ username }) => {
           }
         );
 
-        // Assuming this contains transcription data
-        // Assuming the backend returns segmentation data in the format { message, segmentation }
+  
         if (transcriptionResponse.data.transcriptions) {
           transcriptionResults.push(transcriptionResponse.data.transcriptions);
-          // console.log(segmentationResponse.data.segmentation);
+    
         }
       }
 
@@ -165,10 +161,8 @@ const AudioSeparationForm = ({ username }) => {
           }
         );
 
-        // Assuming the backend returns segmentation data in the format { message, segmentation }
         if (segmentationResponse.data.segmentation) {
           segmentedTracks.push(segmentationResponse.data.segmentation);
-          // console.log(segmentationResponse.data.segmentation);
         }
       }
 
@@ -261,8 +255,6 @@ const AudioSeparationForm = ({ username }) => {
     audioContext.close();
 
     const audiobufferToBlob = require("audiobuffer-to-blob");
-
-    // assume 'audioBuffer' is a valid AudioBuffer instance
     const blob = audiobufferToBlob(audioBuffer);
     const url = URL.createObjectURL(blob);
 
@@ -270,10 +262,7 @@ const AudioSeparationForm = ({ username }) => {
   };
 
   const normalizeAudioData = (audioData) => {
-    // Find the maximum absolute amplitude value in the audio data
     const maxAmplitude = Math.max(...audioData.map(Math.abs));
-
-    // Normalize the audio data by dividing each amplitude value by the maximum absolute amplitude
     const normalizedAudioData = audioData.map((value) => value / maxAmplitude);
 
     return normalizedAudioData;
@@ -304,7 +293,7 @@ const AudioSeparationForm = ({ username }) => {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = `separated_audio_${index}.wav`; // Change the filename as needed
+    a.download = `separated_audio_${index}.wav`;
     document.body.appendChild(a);
     a.click();
     URL.revokeObjectURL(url);
@@ -335,14 +324,11 @@ const AudioSeparationForm = ({ username }) => {
       });
     });
 
-    // Create a canvas element dynamically for pie chart
     const canvasContainer = document.getElementById("pie-chart-container");
     const pieChartCanvas = document.createElement("canvas");
     pieChartCanvas.id = "gender-pie-chart";
-    canvasContainer.innerHTML = ""; // Clear previous chart
+    canvasContainer.innerHTML = ""; 
     canvasContainer.appendChild(pieChartCanvas);
-
-    // Create a pie chart using Chart.js for gender distribution
     const pieCtx = pieChartCanvas.getContext("2d");
     new Chart(pieCtx, {
       type: "pie",
@@ -372,7 +358,7 @@ const AudioSeparationForm = ({ username }) => {
     const barChartContainer = document.getElementById("bar-chart-container");
     const barChartCanvas = document.createElement("canvas");
     barChartCanvas.id = "gender-bar-chart";
-    barChartContainer.innerHTML = ""; // Clear previous chart
+    barChartContainer.innerHTML = ""; 
     barChartContainer.appendChild(barChartCanvas);
 
     // Create a bar chart using Chart.js for time stamps
@@ -478,39 +464,26 @@ const AudioSeparationForm = ({ username }) => {
     setSearchKeyword(event.target.value);
   };
 
-  // const handleFileChange = (file) => {
-  //   if (file && file.type === 'audio/wav') {
-  //     setAudioFile(file);
-  //     setUploadStatus('success');
-  //   } else {
-  //     setUploadStatus('error');
-  //   }
-    
-    
-  // };
 
   const handleFileChange = async (file) => {
     const { name, type } = file;
     const currentDate = new Date();
   
     if (file && file.type === 'audio/wav') {
-      // Set upload status to 'success' if the file is a .wav audio file
       
       setUploadStatus('success');
-      setAudioFile(file); // Store the file in state if needed
-  
+      setAudioFile(file); 
       const reader = new FileReader();
       reader.onload = async (event) => {
         const fileContent = event.target.result;
   
         try {
-          // Send file information to backend MongoDB
           await axios.post("http://localhost:3001/savefiles", {
             name: name,
             date: currentDate,
             type: type,
-            email: email, // Assuming 'email' is defined in your component
-            content: fileContent // Send file content as base64 string
+            email: email, 
+            content: fileContent 
           });
           console.log("File information sent to backend MongoDB.");
         } catch (error) {
@@ -518,18 +491,16 @@ const AudioSeparationForm = ({ username }) => {
         }
       };
   
-      reader.readAsDataURL(file); // Read file as base64 data
+      reader.readAsDataURL(file); 
     } else {
-      // Set upload status to 'error' if the file is not a .wav audio file
       setUploadStatus('error');
     }
   };
  
 
   const onDrop = (acceptedFiles) => {
-    // Handle dropped files here
     if (acceptedFiles && acceptedFiles.length > 0) {
-      handleFileChange(acceptedFiles[0]); // Assuming you handle only the first dropped file
+      handleFileChange(acceptedFiles[0]); 
     }
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop,  multiple: false,  accept: 'audio/wav' });
@@ -545,10 +516,10 @@ const AudioSeparationForm = ({ username }) => {
             padding: "20px",
             textAlign: "center",
             backgroundColor: isDragActive ? "#f7f7f7" : "#ffffff",
-            backgroundImage: `url(${backgroundImage})`, // Set background image URL
+            backgroundImage: `url(${backgroundImage})`, 
             backgroundSize: "90% 140%" ,
-            height: "300px", // Adjust the height of the drop zone
-            position: "relative", // Ensure position is relative for absolute positioning of content
+            height: "300px",
+            position: "relative", 
           }}
         >
           <input {...getInputProps()}  handleChange={handleFileChange} type="audioFile" types={fileTypes}/>
@@ -560,7 +531,6 @@ const AudioSeparationForm = ({ username }) => {
         </div>
       </div>
       <div style={{marginBottom:'10px', marginTop:'5px'}}>
-      {/* Conditionally render success or error message using the Alert component */}
       {uploadStatus === 'success' && (
         <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
           File upload successfully!
@@ -573,7 +543,6 @@ const AudioSeparationForm = ({ username }) => {
         </Alert>
       )}
 
-      {/* Your file uploader component and other content */}
       
     </div>
 
@@ -585,15 +554,7 @@ const AudioSeparationForm = ({ username }) => {
         style={{ marginTop: "10px", marginBottom: "10px", width: "300px" }}
       />
 
-      {/* File uploader component */}
-      <div className="fileuploadercontainer" style={{ marginTop: "0px" }}>
-        {/* <FileUploader
-          handleChange={handleFileChange}
-          name="file"
-          type="audioFile"
-          types={fileTypes}
-        /> */}
-      </div>
+ 
 
       {/* Separate and segment audio button */}
       <button
@@ -601,8 +562,8 @@ const AudioSeparationForm = ({ username }) => {
         disabled={!audioFile || loading}
         style={{
           marginTop: "20px",
-          backgroundColor: !audioFile || loading ? "#94b0e8" : "#002366", // Lighter shade of primary color when disabled
-          color: "#fff", // Text color
+          backgroundColor: !audioFile || loading ? "#94b0e8" : "#002366", 
+          color: "#fff",
           borderColor: "#002366",
         }}
       >
@@ -879,9 +840,7 @@ const AudioSeparationForm = ({ username }) => {
           }}
         ></div>
       </div>
-      {/* <div>
-        <button onClick={separateAndSegmentAudio}>Transcribe</button>
-      </div> */}
+
     </div>
   );
 };

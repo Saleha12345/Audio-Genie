@@ -19,7 +19,6 @@ const SubscriptionPlan = () => {
 
   return (
     <div className="subscription-plan-container">
-      {/* Header */}
       <div className="header">
       <div className="logo-container">
             <img src={require("../img/logo.png")} alt="Logo" className="logo" />
@@ -39,10 +38,7 @@ const SubscriptionPlan = () => {
       <div className="main-content">
         <h1>Your All-in-One Audio Solution</h1>
         <p>Select the Perfect Plan to Elevate Your Sound Experience to New Heights and Unleash Your Audio Creativity</p>
-
-        {/* Subscription Plan Cards */}
         <div className="subscription-cards">
-          {/* Free Plan Card */}
           <div className="subscription-card free-plan">
             <h2 className="free_text">Basic</h2>
             <p className="price">Rs 300</p>
@@ -58,8 +54,6 @@ const SubscriptionPlan = () => {
           </Link>
 
           </div>
-
-          {/* Standard Plan Card */}
           <div className="subscription-card standard-plan">
             <div className="best-value-box">Best Value</div>
             <h2 className="stand_text">Standard</h2>

@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 async function dbConnect() {
   // use mongoose to connect this app to our database on mongoDB using the DB_URL (connection string)
   mongoose
-    .connect('mongodb+srv://saleha:saleha1234@cluster0.cftc4dy.mongodb.net/AudioGenie?retryWrites=true&w=majority',
+    .connect('mongodb+srv://saleha:*********@cluster0.cftc4dy.mongodb.net/AudioGenie?retryWrites=true&w=majority',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
