@@ -20,7 +20,7 @@ const UserFilesComponent = () => {
         const { email } = signupDetails;
         const response = await axios.post('http://localhost:3001/getFiles', { email });
         setUserFiles(response.data);
-        setFilteredFiles(response.data); // Initialize filteredFiles with userFiles
+        setFilteredFiles(response.data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user files:', error);
@@ -34,7 +34,6 @@ const UserFilesComponent = () => {
   }, [signupDetails]);
 
   useEffect(() => {
-    // Filter files based on searchKeyword
     const filtered = userFiles.filter(file =>
       file.name.toLowerCase().includes(searchKeyword.toLowerCase())
     );
@@ -45,7 +44,7 @@ const UserFilesComponent = () => {
     try {
       await axios.delete(`http://localhost:3001/deleteFile/${fileId}`);
       setUserFiles(prevFiles => prevFiles.filter(file => file._id !== fileId));
-      setFilteredFiles(prevFiles => prevFiles.filter(file => file._id !== fileId)); // Update filteredFiles
+      setFilteredFiles(prevFiles => prevFiles.filter(file => file._id !== fileId));
     } catch (error) {
       console.error('Error deleting file:', error);
     }
@@ -71,7 +70,7 @@ const UserFilesComponent = () => {
 
   const handleFilterChange = (event) => {
     setFilterCriteria(event.target.value);
-    let sortedFiles = [...filteredFiles]; // Sort from filteredFiles, not userFiles
+    let sortedFiles = [...filteredFiles];
     if (event.target.value === 'nameAsc') {
       sortedFiles.sort((a, b) => a.name.localeCompare(b.name));
     } else if (event.target.value === 'nameDesc') {

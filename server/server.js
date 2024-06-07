@@ -17,7 +17,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 async function dbConnect() {
-  // use mongoose to connect this app to our database on mongoDB using the DB_URL (connection string)
   mongoose
     .connect('mongodb+srv://saleha:*********@cluster0.cftc4dy.mongodb.net/AudioGenie?retryWrites=true&w=majority',
       {
@@ -58,8 +57,6 @@ async function dbConnect() {
   app.post('/login', async (req, res) => {
     try {
       const { email, password } = req.body;
-  
-      // Check if a user with the given email exists
       const user = await User.findOne({ email });
       userData=user;
       if (!user) {
@@ -295,8 +292,6 @@ app.get('/userCountries', async (req, res) => {
 
     const labels = userCountries.map(country => country._id);
     const data = userCountries.map(country => country.count);
-
-    // console.log('countryyy:', labels, data);
     res.json({ labels, data });
   } catch (error) {
     console.error('Error fetching user countries:', error);
@@ -360,14 +355,10 @@ app.post("/savefiles", async (req, res) => {
       email, 
       content: Buffer.from(content, 'base64') 
     });
-
-    // Save the document to the database
     await file.save();
-
-    // Send a success response
     res.status(200).json({ message: "File information saved successfully." });
   } catch (error) {
-    // Send an error response if something goes wrong
+
     console.error("Error saving file information:", error);
     res.status(500).json({ message: "Internal server error." });
   }
@@ -383,7 +374,6 @@ app.post("/getFiles", async (req, res) => {
     const files = await File.find({ email });
 
     if (files.length > 0) {
-      // Convert file content to base64 before sending
       const filesWithBase64 = files.map(file => ({
         ...file.toObject(),
         content: file.content.toString('base64')
@@ -400,9 +390,7 @@ app.post("/getFiles", async (req, res) => {
   }
 });
 
-// Function to validate email format
 function isValidEmail(email) {
-  // Regular expression to check email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
@@ -411,8 +399,6 @@ function isValidEmail(email) {
 app.delete("/deleteFile/:id", async (req, res) => {
   try {
     const fileId = req.params.id;
-
-    // Delete the file from MongoDB by its ID
     await File.findByIdAndDelete(fileId);
 
     res.status(200).json({ message: "File deleted successfully." });
@@ -424,8 +410,6 @@ app.delete("/deleteFile/:id", async (req, res) => {
 
 
 module.exports = app;
-
-// Start the server
 const PORT = 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

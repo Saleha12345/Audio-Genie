@@ -1,6 +1,4 @@
-// Import necessary React components and styles
-
-import "../styles/SubscriptionPlan.css"; // Import your stylesheet for this component
+import "../styles/SubscriptionPlan.css";
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from './UserContext';
@@ -20,11 +18,11 @@ const SubscriptionPlan = () => {
   return (
     <div className="subscription-plan-container">
       <div className="header">
-      <div className="logo-container">
-            <img src={require("../img/logo.png")} alt="Logo" className="logo" />
-            <div className="logo-text">Audio Genie</div>
+        <div className="logo-container">
+          <img src={require("../img/logo.png")} alt="Logo" className="logo" />
+          <div className="logo-text">Audio Genie</div>
         </div>
-       
+
         <div className="header-links">
           <a href="/">Home</a>
           <a href="/Pricing">Pricing</a>
@@ -34,7 +32,6 @@ const SubscriptionPlan = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="main-content">
         <h1>Your All-in-One Audio Solution</h1>
         <p>Select the Perfect Plan to Elevate Your Sound Experience to New Heights and Unleash Your Audio Creativity</p>
@@ -46,12 +43,12 @@ const SubscriptionPlan = () => {
               <li><i class="fa-solid fa-check" style={{ color: 'blue' }}></i> 5 Audio File Uploads</li>
               <li><i class="fa-solid fa-check" style={{ color: 'blue' }}></i> 10 Audio Separation Requests</li>
               <li><i class="fa-solid fa-check" style={{ color: 'blue' }}></i> Explore Audio Genie for a week, no cost required</li>
-            </ul>          
+            </ul>
             <Link to="/Payment">
-            <button onClick={() => handlePlanSelection('Basic', '300')}>
-              Get Started
-            </button>
-          </Link>
+              <button onClick={() => handlePlanSelection('Basic', '300')}>
+                Get Started
+              </button>
+            </Link>
 
           </div>
           <div className="subscription-card standard-plan">
@@ -63,17 +60,16 @@ const SubscriptionPlan = () => {
               <li><i class="fa-solid fa-check" style={{ color: 'white' }}></i> 50 Audio Separation Requests per Month</li>
               <li><i class="fa-solid fa-check" style={{ color: 'white' }}></i> 15 Speech analysis requests (Premium tool)</li>
             </ul>
-            
+
             <Link to="/Payment">
-            <button onClick={() => handlePlanSelection('Standard', '900')}>
-              Get Started
-            </button>
-          </Link>
-            
-          
+              <button onClick={() => handlePlanSelection('Standard', '900')}>
+                Get Started
+              </button>
+            </Link>
+
+
           </div>
 
-          {/* Premium Plan Card */}
           <div className="subscription-card premium-plan">
             <h2 className="prem_text">Premium</h2>
             <p className="price">Rs 3,000 <span>/month</span></p>
@@ -82,11 +78,11 @@ const SubscriptionPlan = () => {
               <li><i class="fa-solid fa-check" style={{ color: 'blue' }}></i> 200 Audio Separation Requests</li>
               <li><i class="fa-solid fa-check" style={{ color: 'blue' }}></i> Full Access to Premium Features, including Speech Analysis</li>
             </ul>
-            <Link  className="stan-btn"  to="/Payment">
-            <button onClick={() => handlePlanSelection('Premium', '3000')} >
-              Get Started
-            </button>
-          </Link>
+            <Link className="stan-btn" to="/Payment">
+              <button onClick={() => handlePlanSelection('Premium', '3000')} >
+                Get Started
+              </button>
+            </Link>
           </div>
         </div>
       </div>

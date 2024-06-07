@@ -12,10 +12,10 @@ import IconButton from '@mui/material/IconButton';
 import BlockIcon from '@mui/icons-material/Block';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { green, yellow , red, blue, purple} from '@mui/material/colors';
+import { green, yellow, red, blue, purple } from '@mui/material/colors';
 
 const getRandomColor = () => {
-  const colors = [blue[500], green[500], yellow[500], purple[500]]; // Add more colors if needed
+  const colors = [blue[500], green[500], yellow[500], purple[500]];
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 };
@@ -54,7 +54,6 @@ const User = () => {
       const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
       const response = await axios.put(`http://localhost:3001/users/${email}/status/${newStatus}`);
       if (response.status === 200) {
-        // Update the user status in the state
         setUsers(users.map(user => user.email === email ? { ...user, status: newStatus } : user));
       }
     } catch (error) {
@@ -64,8 +63,8 @@ const User = () => {
 
   return (
     <div>
-       <h1 style={{marginTop:'20px', marginBottom:'30px'}}>Users</h1>
-      <TableContainer component={Paper} style={{marginTop:'20px'}}>
+      <h1 style={{ marginTop: '20px', marginBottom: '30px' }}>Users</h1>
+      <TableContainer component={Paper} style={{ marginTop: '20px' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -73,7 +72,7 @@ const User = () => {
               <TableCell><b>Name</b></TableCell>
               <TableCell align="right"><b>Email</b></TableCell>
               <TableCell align="right"><b>Subscription Plan</b></TableCell>
-              <TableCell style={{paddingLeft:'80px'}}><b>Action</b></TableCell>
+              <TableCell style={{ paddingLeft: '80px' }}><b>Action</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -89,9 +88,9 @@ const User = () => {
                 <TableCell align="right">{user.plan}</TableCell>
                 <TableCell align="right">
                   <Box display="flex">
-                    <IconButton onClick={() => deleteUser(user.email)}><DeleteIcon sx={{ color: red[500], marginLeft:'40px' }} /></IconButton>
+                    <IconButton onClick={() => deleteUser(user.email)}><DeleteIcon sx={{ color: red[500], marginLeft: '40px' }} /></IconButton>
                     <IconButton onClick={() => toggleUserStatus(user.email, user.status)}>
-                      <BlockIcon sx={{ color: user.status === 'active' ? yellow[500] : green[500] , marginLeft:'20px'}} />
+                      <BlockIcon sx={{ color: user.status === 'active' ? yellow[500] : green[500], marginLeft: '20px' }} />
                     </IconButton>
                   </Box>
                 </TableCell>

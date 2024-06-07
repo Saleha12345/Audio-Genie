@@ -10,12 +10,6 @@ import { light } from "@mui/material/styles/createPalette";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const Setting = () => {
   const [theme, setTheme] = useState(() => {
@@ -43,7 +37,6 @@ const Setting = () => {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [appInfoVisible, setAppInfoVisible] = useState(false);
 
-  // Function to toggle visibility of app information
   const toggleAppInfo = () => {
     setAppInfoVisible(!appInfoVisible);
   };
@@ -77,7 +70,6 @@ const Setting = () => {
     if (checked) {
       alert(`Receive alerts for ${name}`);
     }
-    // Show alert if preference is undone
     if (!checked) {
       alert(`You have turned off notifications for ${name}`);
     }
@@ -87,7 +79,6 @@ const Setting = () => {
     <div className="settings-container">
       <h1 style={{ marginBottom: "30px" }}>Settings</h1>
       <div className="theme-settings">
-        {/* <h3>Theme Preferences</h3> */}
         <Box sx={{ minWidth: 120 }} style={{ marginBottom: "20px" }}>
           <FormControl fullWidth>
             <InputLabel
@@ -110,7 +101,6 @@ const Setting = () => {
         </Box>
 
         <div className="font-size-settings">
-          {/* <h3>Font Size</h3> */}
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel
@@ -154,7 +144,7 @@ const Setting = () => {
         </button>
         {showTerms && (
           <div className="popup">
-            <p style={{textAlign:'left'}}>
+            <p style={{ textAlign: 'left' }}>
               Subscription fees apply for full access. Users responsible for
               uploaded content. Admin monitors and manages user accounts.
             </p>
@@ -168,7 +158,7 @@ const Setting = () => {
         </button>
         {showPrivacy && (
           <div className="popup">
-            <p style={{textAlign:'left'}}>
+            <p style={{ textAlign: 'left' }}>
               We respect your privacy and safeguard any personal information you
               provide while using our platform. We do not share your data with
               third parties without your consent, and we employ robust security

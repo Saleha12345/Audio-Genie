@@ -4,7 +4,10 @@ import '../styles/Signup.css';
 import { Link, useNavigate } from 'react-router-dom';
 import image from '../img/talk.png';
 import { useUser } from './UserContext';
-import {CountryDropdown} from 'react-country-region-selector';
+import { CountryDropdown } from 'react-country-region-selector';
+import { useGoogleLogin } from '@react-oauth/google';
+import Button from '@mui/material/Button';
+import GoogleIcon from '@mui/icons-material/Google';
 
 const Signup = () => {
   const { setSignupDetails } = useUser();
@@ -16,7 +19,7 @@ const Signup = () => {
   const [isEmailValid, setIsEmailValid] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState('');
   const [inputValue, setInputValue] = useState('');
-  
+
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -50,9 +53,29 @@ const Signup = () => {
     history('/SubscriptionPlan');
   };
 
-  const handleGoogleSignIn = async () => {
-    // Handle Google sign-in here if needed
-  };
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log('Google Sign-In successful, token:', tokenResponse);
+      axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokenResponse.access_token}`)
+        .then((response) => {
+          const profile = response.data;
+          console.log('Google profile data:', profile);
+          setSignupDetails({
+            username: profile.name,
+            email: profile.email,
+            googleId: profile.sub,
+            country: 'Pakistan',
+          });
+          history('/SubscriptionPlan');
+        })
+        .catch((error) => {
+          console.error('Error fetching Google profile data', error);
+        });
+    },
+    onError: (errorResponse) => {
+      console.error('Google Sign-In failed', errorResponse);
+    },
+  });
 
   return (
     <div className="signup-container">
@@ -93,17 +116,33 @@ const Signup = () => {
             <p className="error-message">Password must be at least 8 characters and contain at least 1 number</p>
           )}
           <label className='country-selector-container'>
-        Country:
-        <CountryDropdown
-          country={country}
-          value={country}
-          onChange={handleCountryChange}
-        />
-      </label>
+            Country:
+            <CountryDropdown
+              country={country}
+              value={country}
+              onChange={handleCountryChange}
+            />
+          </label>
           <button type="submit"> Continue to Subscription Plan</button>
-          <button onClick={handleGoogleSignIn} className="google-btn">
-            <i className="fab fa-google"></i>   Continue with Google
-          </button>
+          <Button
+            variant="outlined"
+            startIcon={<GoogleIcon sx={{ color: '#0040B5' }} />}
+            onClick={googleLogin}
+            sx={{
+              height: '50px',
+              color: '#4285F4',
+              borderColor: '#0040B5',
+              '&:hover': {
+                borderColor: '#357ae8',
+                backgroundColor: '#f1f3f4',
+              },
+              backgroundColor: '#fff',
+            }}
+            className="google-btn"
+          >
+            Continue with Google
+          </Button>
+
         </form>
         <p>
           Already have an account? <Link to="/login">Log in</Link>

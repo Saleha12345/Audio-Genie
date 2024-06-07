@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import BlockIcon from '@mui/icons-material/Block';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { green, yellow , red} from '@mui/material/colors';
+import { green, yellow, red } from '@mui/material/colors';
 
 const Tryy = () => {
   const [users, setUsers] = useState([]);
@@ -47,7 +47,6 @@ const Tryy = () => {
       const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
       const response = await axios.put(`http://localhost:3001/users/${email}/status/${newStatus}`);
       if (response.status === 200) {
-        // Update the user status in the state
         setUsers(users.map(user => user.email === email ? { ...user, status: newStatus } : user));
       }
     } catch (error) {
@@ -81,9 +80,9 @@ const Tryy = () => {
                 <TableCell align="right">{user.plan}</TableCell>
                 <TableCell align="right">
                   <Box display="flex">
-                  <IconButton onClick={() => deleteUser(user.email)}><DeleteIcon sx={{ color: red[500], marginRight:'-60px' }} /></IconButton>
+                    <IconButton onClick={() => deleteUser(user.email)}><DeleteIcon sx={{ color: red[500], marginRight: '-60px' }} /></IconButton>
                     <IconButton onClick={() => toggleUserStatus(user.email, user.status)}>
-                      <BlockIcon sx={{ color: user.status === 'active' ? yellow[500] : green[500] , marginRight:'7px'}} />
+                      <BlockIcon sx={{ color: user.status === 'active' ? yellow[500] : green[500], marginRight: '7px' }} />
                     </IconButton>
                   </Box>
                 </TableCell>

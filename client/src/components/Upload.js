@@ -33,7 +33,7 @@ const AudioSeparationForm = ({ username }) => {
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [transcriptionResults, setTranscriptionResults] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [uploadStatus, setUploadStatus] = useState(null); 
+  const [uploadStatus, setUploadStatus] = useState(null);
 
   const canvasRef = useRef([]);
   const audioRef = useRef([]);
@@ -45,16 +45,16 @@ const AudioSeparationForm = ({ username }) => {
 
   const handleMuteToggle = (index) => {
     const newMuted = [...muted];
-    newMuted[index] = !newMuted[index]; // Toggle mute status for the corresponding track
+    newMuted[index] = !newMuted[index];
     setMuted(newMuted);
-    audioRef.current[index].muted = newMuted[index]; // Set mute status for the audio player
+    audioRef.current[index].muted = newMuted[index];
   };
 
   const handleVolumeChange = (index, event) => {
-    const newVolumes = [...volumes]; // Create a copy of the volumes array
-    newVolumes[index] = parseFloat(event.target.value); // Update the volume for the corresponding track
+    const newVolumes = [...volumes];
+    newVolumes[index] = parseFloat(event.target.value);
     setVolumes(newVolumes);
-    audioRef.current[index].volume = newVolumes[index]; // Set the volume for the audio player
+    audioRef.current[index].volume = newVolumes[index];
   };
 
   const separateAndSegmentAudio = async () => {
@@ -72,7 +72,6 @@ const AudioSeparationForm = ({ username }) => {
             "Content-Type": "multipart/form-data",
           },
           onUploadProgress: (progressEvent) => {
-            // Simulate slow loading by updating progress every 100ms
             let progress = 0;
             const interval = setInterval(() => {
               progress += 1;
@@ -92,8 +91,6 @@ const AudioSeparationForm = ({ username }) => {
       }
 
       const separatedAudioTracks = response.data.audio_tracks;
-
-      // Convert separated audio tracks to WAV format
       const formattedAudioTracks = await Promise.all(
         separatedAudioTracks.map(async (audioData, index) => {
           const normalizedAudioData = normalizeAudioData(audioData);
@@ -112,8 +109,6 @@ const AudioSeparationForm = ({ username }) => {
           const audiobufferToBlob = require("audiobuffer-to-blob");
           const blob = audiobufferToBlob(audioBuffer);
           const url = URL.createObjectURL(blob);
-
-          // Fetch the blob data
           const response = await fetch(url);
           const blobData = await response.blob();
 
@@ -136,10 +131,10 @@ const AudioSeparationForm = ({ username }) => {
           }
         );
 
-  
+
         if (transcriptionResponse.data.transcriptions) {
           transcriptionResults.push(transcriptionResponse.data.transcriptions);
-    
+
         }
       }
 
@@ -177,8 +172,6 @@ const AudioSeparationForm = ({ username }) => {
       alert("Server is currently busy. Please try again later.");
     }
   };
-
-  // Inside handleAudioPlay function
   const handleAudioPlay = (index) => {
     let audioContext = new (window.AudioContext || window.webkitAudioContext)();
     if (!source.current[index]) {
@@ -186,7 +179,7 @@ const AudioSeparationForm = ({ username }) => {
         audioRef.current[index]
       );
       analyzer.current[index] = audioContext.createAnalyser();
-      analyzer.current[index].fftSize = 256; // Adjust the FFT size for better resolution
+      analyzer.current[index].fftSize = 256;
       source.current[index].connect(analyzer.current[index]);
       analyzer.current[index].connect(audioContext.destination);
     }
@@ -219,9 +212,9 @@ const AudioSeparationForm = ({ username }) => {
       canvasRef.current[index].width,
       0
     );
-    gradient.addColorStop(0, "#0F0089"); // dark purple
-    gradient.addColorStop(0.5, "#485687"); // medium purple
-    gradient.addColorStop(1, "#FF00FF"); // pink
+    gradient.addColorStop(0, "#0F0089");
+    gradient.addColorStop(0.5, "#485687");
+    gradient.addColorStop(1, "#FF00FF");
 
     analyzer.current[index].getByteFrequencyData(dataArray);
     for (let i = 0; i < bufferLength; i++) {
@@ -238,10 +231,7 @@ const AudioSeparationForm = ({ username }) => {
   };
 
   const playSeparatedAudio = (audioData) => {
-    // Normalize the audio data
     const normalizedAudioData = normalizeAudioData(audioData);
-
-    // Convert normalized audio data to an array buffer
     const audioContext = new AudioContext();
     const audioBuffer = audioContext.createBuffer(
       1,
@@ -327,7 +317,7 @@ const AudioSeparationForm = ({ username }) => {
     const canvasContainer = document.getElementById("pie-chart-container");
     const pieChartCanvas = document.createElement("canvas");
     pieChartCanvas.id = "gender-pie-chart";
-    canvasContainer.innerHTML = ""; 
+    canvasContainer.innerHTML = "";
     canvasContainer.appendChild(pieChartCanvas);
     const pieCtx = pieChartCanvas.getContext("2d");
     new Chart(pieCtx, {
@@ -358,10 +348,8 @@ const AudioSeparationForm = ({ username }) => {
     const barChartContainer = document.getElementById("bar-chart-container");
     const barChartCanvas = document.createElement("canvas");
     barChartCanvas.id = "gender-bar-chart";
-    barChartContainer.innerHTML = ""; 
+    barChartContainer.innerHTML = "";
     barChartContainer.appendChild(barChartCanvas);
-
-    // Create a bar chart using Chart.js for time stamps
     const barCtx = barChartCanvas.getContext("2d");
     new Chart(barCtx, {
       type: "bar",
@@ -380,7 +368,7 @@ const AudioSeparationForm = ({ username }) => {
           },
         ],
       },
-      
+
       options: {
         responsive: true,
         scales: {
@@ -468,42 +456,42 @@ const AudioSeparationForm = ({ username }) => {
   const handleFileChange = async (file) => {
     const { name, type } = file;
     const currentDate = new Date();
-  
+
     if (file && file.type === 'audio/wav') {
-      
+
       setUploadStatus('success');
-      setAudioFile(file); 
+      setAudioFile(file);
       const reader = new FileReader();
       reader.onload = async (event) => {
         const fileContent = event.target.result;
-  
+
         try {
           await axios.post("http://localhost:3001/savefiles", {
             name: name,
             date: currentDate,
             type: type,
-            email: email, 
-            content: fileContent 
+            email: email,
+            content: fileContent
           });
           console.log("File information sent to backend MongoDB.");
         } catch (error) {
           console.error("Error sending file information to backend MongoDB:", error);
         }
       };
-  
-      reader.readAsDataURL(file); 
+
+      reader.readAsDataURL(file);
     } else {
       setUploadStatus('error');
     }
   };
- 
+
 
   const onDrop = (acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
-      handleFileChange(acceptedFiles[0]); 
+      handleFileChange(acceptedFiles[0]);
     }
   };
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop,  multiple: false,  accept: 'audio/wav' });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple: false, accept: 'audio/wav' });
 
   return (
     <div>
@@ -516,13 +504,13 @@ const AudioSeparationForm = ({ username }) => {
             padding: "20px",
             textAlign: "center",
             backgroundColor: isDragActive ? "#f7f7f7" : "#ffffff",
-            backgroundImage: `url(${backgroundImage})`, 
-            backgroundSize: "90% 140%" ,
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "90% 140%",
             height: "300px",
-            position: "relative", 
+            position: "relative",
           }}
         >
-          <input {...getInputProps()}  handleChange={handleFileChange} type="audioFile" types={fileTypes}/>
+          <input {...getInputProps()} handleChange={handleFileChange} type="audioFile" types={fileTypes} />
           {isDragActive ? (
             <p>Drop the audio file here...</p>
           ) : (
@@ -530,21 +518,21 @@ const AudioSeparationForm = ({ username }) => {
           )}
         </div>
       </div>
-      <div style={{marginBottom:'10px', marginTop:'5px'}}>
-      {uploadStatus === 'success' && (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-          File upload successfully!
-        </Alert>
-      )}
+      <div style={{ marginBottom: '10px', marginTop: '5px' }}>
+        {uploadStatus === 'success' && (
+          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            File upload successfully!
+          </Alert>
+        )}
 
-      {uploadStatus === 'error' && (
-        <Alert severity="error">
-          Error: Please upload a .wav audio file.
-        </Alert>
-      )}
+        {uploadStatus === 'error' && (
+          <Alert severity="error">
+            Error: Please upload a .wav audio file.
+          </Alert>
+        )}
 
-      
-    </div>
+
+      </div>
 
       <input
         type="text"
@@ -554,7 +542,7 @@ const AudioSeparationForm = ({ username }) => {
         style={{ marginTop: "10px", marginBottom: "10px", width: "300px" }}
       />
 
- 
+
 
       {/* Separate and segment audio button */}
       <button
@@ -562,7 +550,7 @@ const AudioSeparationForm = ({ username }) => {
         disabled={!audioFile || loading}
         style={{
           marginTop: "20px",
-          backgroundColor: !audioFile || loading ? "#94b0e8" : "#002366", 
+          backgroundColor: !audioFile || loading ? "#94b0e8" : "#002366",
           color: "#fff",
           borderColor: "#002366",
         }}
@@ -721,7 +709,6 @@ const AudioSeparationForm = ({ username }) => {
           <div style={{ marginRight: "10px", marginLeft: "-250px" }}>
             {transcriptionResults[index] && (
               <div style={{ marginRight: "10px" }}>
-                {/* Filter items that contain the search keyword */}
                 {transcriptionResults[index].map((item, subIndex) => (
                   <Accordion key={subIndex}>
                     <AccordionSummary
@@ -735,9 +722,9 @@ const AudioSeparationForm = ({ username }) => {
                     </AccordionSummary>
                     <AccordionDetails style={{ width: "200px" }}>
                       <div>
-                        <div  style={{ color: "green"}}>
+                        <div style={{ color: "green" }}>
                           <strong
-                            style={{ color: "green", paddingRight: "10px"}}
+                            style={{ color: "green", paddingRight: "10px" }}
                           >
                             Start Time:
                           </strong>{" "}
@@ -762,7 +749,7 @@ const AudioSeparationForm = ({ username }) => {
                             .split(new RegExp(`(${searchKeyword})`, "gi"))
                             .map((part, i) =>
                               part.toLowerCase() ===
-                              searchKeyword.toLowerCase() ? (
+                                searchKeyword.toLowerCase() ? (
                                 <mark key={i}>{part}</mark>
                               ) : (
                                 <React.Fragment key={i}>{part}</React.Fragment>
@@ -803,19 +790,19 @@ const AudioSeparationForm = ({ username }) => {
           marginTop: "20px",
           backgroundColor:
             !audioFile ||
-            loading ||
-            selectedTracks.filter((track) => track).length < 2
+              loading ||
+              selectedTracks.filter((track) => track).length < 2
               ? "#94b0e8"
-              : "#002366", // Lighter shade of primary color when disabled
-          color: "#fff", // Text color
-          borderColor: "#002366", // Border color
+              : "#002366",
+          color: "#fff",
+          borderColor: "#002366",
         }}
       >
         Download
       </button>
 
       <div style={{ display: "flex", flexDirection: "row" }}>
-       
+
         <div
           id="bar-chart-container"
           style={{
@@ -826,17 +813,17 @@ const AudioSeparationForm = ({ username }) => {
             padding: "10px",
             marginRight: "10px",
           }}
-        >  </div> 
-      
+        >  </div>
+
         <div
           id="pie-chart-container"
           style={{
             width: "400px",
-            height:'300px',
+            height: '300px',
             backgroundColor: "white",
             borderRadius: "5px",
             padding: "10px",
-            paddingLeft:'60px'
+            paddingLeft: '60px'
           }}
         ></div>
       </div>

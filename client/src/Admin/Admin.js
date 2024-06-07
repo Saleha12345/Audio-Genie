@@ -22,10 +22,10 @@ const Admin = () => {
   let sectionComponent;
   switch (currentSection) {
     case 'Dashboard':
-      sectionComponent = <AdminDashboard/>;
+      sectionComponent = <AdminDashboard />;
       break;
     case 'User':
-      sectionComponent = <User/>;
+      sectionComponent = <User />;
       break;
 
     default:
@@ -33,18 +33,18 @@ const Admin = () => {
   }
 
   return (
-   
-    <div className="main-container">
-      
-    <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick} />
 
-      
-      <div className="content" style={{ marginLeft: isOpen ? '250px' : '0', marginTop:'-15px'}}>
-        
+    <div className="main-container">
+
+      <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick} />
+
+
+      <div className="content" style={{ marginLeft: isOpen ? '250px' : '0', marginTop: '-15px' }}>
+
         {sectionComponent}
       </div>
     </div>
-  
+
   );
 };
 

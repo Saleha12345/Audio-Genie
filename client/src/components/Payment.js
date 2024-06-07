@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import creditCardType from 'credit-card-type';
@@ -9,7 +8,7 @@ import "../styles/Payment.css";
 const Payment = () => {
   const history = useNavigate();
   const { signupDetails } = useUser();
-  const { username, email, password, country,plan, price } = signupDetails;
+  const { username, email, password, country, plan, price } = signupDetails;
   const [cardNumber, setCardNumber] = useState('');
   const [cardholderName, setCardholderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
@@ -19,8 +18,6 @@ const Payment = () => {
   const handleCardNumberChange = (e) => {
     const newCardNumber = e.target.value;
     setCardNumber(newCardNumber);
-
-    // Detect card type based on the entered card number
     const cardTypeInfo = creditCardType(newCardNumber);
     if (cardTypeInfo.length > 0) {
       setCardType(cardTypeInfo[0].niceType);
@@ -44,7 +41,7 @@ const Payment = () => {
     setCVV(newCVV);
   };
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -74,12 +71,9 @@ const Payment = () => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      // Redirect to MainComponent after successful payment and signup
       history(`/MainComponent`);
     } catch (error) {
       console.error('Payment error:', error);
-      // Handle payment error (display error message, etc.)
     }
   };
 

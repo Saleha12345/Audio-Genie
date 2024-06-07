@@ -9,9 +9,13 @@ import Login from './components/Login.js';
 import Pricing from './components/Pricing.js';
 import { UserProvider } from './components/UserContext.js';
 import Admin from './Admin/Admin.js'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = "150810049291-1seon7kuc6ua8ev76s1muikpfnq11hjk.apps.googleusercontent.com";
 
 function App() {
   return (
+    <GoogleOAuthProvider clientId={clientId}>
     <UserProvider>
     <Router>
       <div>
@@ -28,6 +32,7 @@ function App() {
       </div>
     </Router>
     </UserProvider>
+    </GoogleOAuthProvider>
   );
 }
 

@@ -1,8 +1,7 @@
-/* User.css */
 .user-list {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Adjust the gap between users */
+  gap: 10px;
 }
 
 .user-header {
@@ -39,6 +38,7 @@
 .user-buttons button {
   margin-left: 10px;
 }
+
 .profile-icon {
   width: 40px;
   height: 40px;

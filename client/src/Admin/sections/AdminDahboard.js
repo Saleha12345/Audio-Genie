@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bar, Pie } from "react-chartjs-2";
-import "../../styles/AdminDashboard.css"; // Import CSS file for AdminDashboard styling
+import "../../styles/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
       console.error("Error fetching users:", error);
     }
   };
- 
+
 
   useEffect(() => {
     const fetchActiveUsers = async () => {
@@ -111,16 +111,12 @@ const AdminDashboard = () => {
     }
   };
 
-  // Process fetched data to ensure data for all 12 months
   const processData = () => {
     const dataByMonth = {};
-
-    // Initialize counts for all 12 months
     for (let i = 1; i <= 12; i++) {
       dataByMonth[i] = 0;
     }
 
-    // Add counts from fetched data
     monthlyRegistrations.forEach(({ month, count }) => {
       dataByMonth[month] = count;
     });
@@ -145,7 +141,6 @@ const AdminDashboard = () => {
     return { labels, data };
   };
 
-  // Convert processed data to chart-friendly format
   const chartData = {
     labels: processData().labels,
     datasets: [
@@ -162,8 +157,6 @@ const AdminDashboard = () => {
       const response = await axios.get("http://localhost:3001/userCountries");
       if (response.status === 200) {
         const countries = response.data;
-
-        // Accessing the 'labels' and 'data' properties directly
         setCountriesData({
           labels: countries.labels,
           data: countries.data,
@@ -173,8 +166,6 @@ const AdminDashboard = () => {
       console.error("Error fetching countries:", error);
     }
   };
-
-
 
   const countryChart = {
     labels: countriesData.labels,
@@ -199,18 +190,18 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-       <h1 style={{marginTop:'10px', marginBottom:'20px'}}>Dashboard</h1>
+      <h1 style={{ marginTop: '10px', marginBottom: '20px' }}>Dashboard</h1>
       <div className="card-small">
         <div className="total-users-card card">
           <img src={require('../../img/total-users.png')} alt="total users" className="users" />
           <h2 className="total-users-title"> {userCount} Users</h2>
         </div>
         <div className="total-users-card card">
-        <img src={require('../../img/total-sub.png')} alt="total users" className="users" />
+          <img src={require('../../img/total-sub.png')} alt="total users" className="users" />
           <h2 className="total-users-title">{userCount} Subscriptions</h2>
         </div>
         <div className="total-users-card card">
-        <img src={require('../../img/active-users.png')} alt="total users" className="users" />
+          <img src={require('../../img/active-users.png')} alt="total users" className="users" />
           <h2 className="total-users-title">{activeCount} Active</h2>
         </div>
       </div>
@@ -237,13 +228,13 @@ const AdminDashboard = () => {
             <h2>Countries data</h2>
             <Pie data={countryChart} />
           </div>
-          
+
         </div>
         <div className="">
-          
+
           <div className="monthly-registrations-chart card-graph">
             <h2 className="graph-title">Monthly Registrations</h2>
-            <Bar 
+            <Bar
               data={chartData}
               options={{
                 scales: {

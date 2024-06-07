@@ -8,14 +8,11 @@ import EditProfile from './sections/EditProfile';
 import Feedback from './sections/Feedback';
 import FAQs from './sections/FAQ';
 import History from './sections/History';
-import { useUser } from './UserContext'; // Import the useUser hook
-import ButtonAppBar from './ButtonAppBar';
+import { useUser } from './UserContext';
 
 const MainComponent = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [currentSection, setCurrentSection] = useState('Home');
-  
-  // Use the useUser hook to access signupDetails from UserContext
   const { signupDetails } = useUser();
   const { username } = signupDetails;
 
@@ -56,12 +53,11 @@ const MainComponent = () => {
   }
 
   return (
-    <div className="main-container" style={{padding:'20px'}}>
-      <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick}/>    
-      <div className="content" style={{ marginLeft: isOpen ? '250px' : '0' , marginTop:'-15px', width:'600px'}}>
-        {/* <ButtonAppBar/>   */}
+    <div className="main-container" style={{ padding: '20px' }}>
+      <Sidebar isOpen={isOpen} toggle={toggleSidebar} handleMenuClick={handleMenuClick} />
+      <div className="content" style={{ marginLeft: isOpen ? '250px' : '0', marginTop: '-15px', width: '600px' }}>
         {sectionComponent}
-        
+
       </div>
     </div>
   );

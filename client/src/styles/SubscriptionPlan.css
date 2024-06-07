@@ -1,6 +1,3 @@
-/* SubscriptionPlan.css */
-
-/* General styles */
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #F9F5FF;
@@ -14,7 +11,6 @@ body {
   padding: 20px;
 }
 
-/* Header styles */
 .header {
   display: flex;
   align-items: center;
@@ -26,30 +22,33 @@ body {
 .logo {
   width: 80px;
   height: auto;
-  
+
 }
-.logo-container{
+
+.logo-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  
+
 }
 
 .logo-text {
-  margin-left: 10px; /* Adjust the margin to control the space between logo and text */
+  margin-left: 10px;
   font-weight: bold;
   font-size: 20px;
   color: black;
 }
-.header-links{
+
+.header-links {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
- 
+
 
 }
+
 .header-links a {
   margin-right: 20px;
   text-decoration: none;
@@ -57,15 +56,15 @@ body {
   font-weight: bold;
 }
 
-.log_btn{
+.log_btn {
   background-color: #0040B5;
   color: white;
   padding: 10px;
   border-radius: 5px;
   padding-inline: 30px;
-  
- }
-/* Main content styles */
+
+}
+
 .main-content {
   text-align: center;
   margin-top: 30px;
@@ -82,15 +81,15 @@ p {
   margin-bottom: 100px;
 }
 
-/* Subscription Card styles */
+
 .subscription-cards {
-  
+
   display: flex;
   justify-content: space-around;
 }
 
 .subscription-card {
- 
+
   padding: 20px;
   width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -140,8 +139,6 @@ button {
   background-color: rgb(196, 196, 210);
 }
 
-
-/* Subscription Card styles */
 .subscription-card {
   border-radius: 20px;
   padding: 20px;
@@ -156,12 +153,15 @@ button {
   font-weight: lighter;
   color: #000000;
 }
-.free_text, .prem_text {
+
+.free_text,
+.prem_text {
   font-size: 32px;
   font-weight: lighter;
   color: #000000;
 }
-.stand_text{
+
+.stand_text {
   font-size: 32px;
   font-weight: lighter;
   color: white;
@@ -174,18 +174,21 @@ button {
   margin: 10px 0;
   padding-bottom: 20px;
 }
-.price_stand{
+
+.price_stand {
   font-size: 40px;
   font-weight: bolder;
   color: #ffffff;
   margin: 10px 0;
   padding-bottom: 20px;
 }
-.price_stand span{
+
+.price_stand span {
   font-size: 12px;
 }
+
 .price span {
-  font-size: 12px; 
+  font-size: 12px;
 }
 
 
@@ -200,7 +203,7 @@ ul li {
 }
 
 
-.stan_btn{
+.stan_btn {
   background-color: #ffffff;
   color: #0040B5;
   padding: 10px 20px;
@@ -211,9 +214,11 @@ ul li {
   transition: background-color 0.3s ease-in-out;
   margin-bottom: 20px;
 }
-.stan_btn:hover{
+
+.stan_btn:hover {
   background-color: #c9d9f8;
 }
+
 button {
   background-color: #0040B5;
   color: #FFF6F6;
@@ -224,11 +229,11 @@ button {
   transition: background-color 0.3s ease-in-out;
   margin-bottom: 50px;
 }
+
 button:hover {
   background-color: #002366;
 }
 
-/* Card specific styles */
 .free-plan {
   background-color: #FFF;
   color: #000;
@@ -244,18 +249,14 @@ button:hover {
   color: #000;
 }
 
-/* Add light shadow on the cards */
 .subscription-card:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Round the edges of Get Started button */
 button {
   border-radius: 8px;
 }
-/* ... (previous styles) */
 
-/* Card specific styles */
 .standard-plan {
   position: relative;
   border-color: #2ecc71;
@@ -268,7 +269,7 @@ button {
   position: absolute;
   top: 0;
   left: 20px;
-  background-color: #FFD700; /* Yellow color */
+  background-color: #FFD700;
   color: #000;
   padding: 5px 10px;
   font-size: 12px;
@@ -283,4 +284,5 @@ button {
   .subscription-card {
     width: 100%;
     margin-bottom: 20px;
-  }}
+  }
+}

@@ -12,7 +12,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
 
 export default function ButtonAppBar() {
-  
+
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -27,7 +27,7 @@ export default function ButtonAppBar() {
         vertical: 'top',
         horizontal: 'right',
       }}
-      
+
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -54,8 +54,8 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{backgroundColor:'#024dd6'}}>
-        <Toolbar style={{left:'400px'}}>
+      <AppBar position="static" style={{ backgroundColor: '#024dd6' }}>
+        <Toolbar style={{ left: '400px' }}>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -76,12 +76,12 @@ export default function ButtonAppBar() {
               size="large"
               edge="end"
               aria-label="account of current user"
-              
+
               aria-haspopup="true"
-            
+
               color="inherit"
             >
-             <Avatar alt="Admin" src="/static/images/avatar/2.jpg" style={{backgroundColor:'purple'}} />
+              <Avatar alt="Admin" src="/static/images/avatar/2.jpg" style={{ backgroundColor: 'purple' }} />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

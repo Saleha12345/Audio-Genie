@@ -2,83 +2,64 @@
   position: relative;
 }
 
-/* Add background image to the container */
-/* .file-uploader-container {
-  background-image: url('../img/drag_bg.png');
-  background-size: cover;
-  background-position: center;
-} */
-/* Adjustments for file uploader */
-
-/* Style for buttons */
 button {
-margin-right: 10px;
-margin-bottom: 10px;
-padding: 8px 16px;
-font-size: 16px;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-background-color: #024dd6;
-color: #fff;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #024dd6;
+  color: #fff;
 }
 
 button:disabled {
-background-color: #ccc;
-cursor: not-allowed;
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-/* Style for circular progress bar container */
 .progress-bar-container {
-width: 50px;
-height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
-/* Style for audio player container */
 .audio-player-container {
-display: flex;
-align-items: center;
-margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-/* Style for play button */
 .play-button {
-margin-right: 10px;
+  margin-right: 10px;
 }
 
-/* Style for volume control */
 .volume-control {
-margin-right: 10px;
-width: 100px;
+  margin-right: 10px;
+  width: 100px;
 }
 
-/* Style for mute button */
 .mute-button {
-margin-right: 10px;
+  margin-right: 10px;
 }
 
-/* Style for download button */
 .download-button {
-margin-right: 10px;
+  margin-right: 10px;
 }
 
-/* Style for canvas */
 .canvas {
-width: 500px; /* Adjust width as needed */
-height: 200px; /* Adjust height as needed */
+  width: 500px;
+  height: 200px;
 }
 
-/* Style for chart containers */
 .chart-container {
-margin-top: 20px;
+  margin-top: 20px;
 }
 
-/* Style for pie chart container */
 .pie-chart-container {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-/* Style for bar chart container */
 .bar-chart-container {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }

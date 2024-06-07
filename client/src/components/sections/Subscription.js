@@ -14,13 +14,11 @@ const Subscription = ({ userId }) => {
   const { signupDetails, setSignupDetails } = useUser();
 
   useEffect(() => {
-    // Fetch current user subscription when component mounts
     fetchCurrentSubscription();
   }, []);
 
   const fetchCurrentSubscription = async () => {
     try {
-      // Extract email from signupDetails
       console.log(signupDetails);
       const { email } = signupDetails;
       console.log(email);
@@ -30,7 +28,6 @@ const Subscription = ({ userId }) => {
         { email }
       );
       if (response.status === 200) {
-        // Access the data received from the backend
         console.log("Subscription:", response.data);
         setCurrentSubscription(response.data);
       }
@@ -48,20 +45,18 @@ const Subscription = ({ userId }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: email, newPlan: newSubscription }), // Assuming userEmail holds the user's email
+        body: JSON.stringify({ email: email, newPlan: newSubscription }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log(data.message);
         window.alert("Plan updated successfully!");
-        // Handle success, maybe update UI or show a success message
       } else {
         throw new Error("Failed to update plan");
       }
     } catch (error) {
       console.error("Error updating subscription:", error);
-      // Handle error, show error message to the user or retry
       window.alert("Failed to update plan. Please try again.");
     }
   };
@@ -83,54 +78,42 @@ const Subscription = ({ userId }) => {
 
   return (
     <div>
-      <h2 style={{marginTop:'20px'}}>Manage Subscription</h2>
+      <h2 style={{ marginTop: '20px' }}>Manage Subscription</h2>
       <div
         style={{ alignItems: "end", marginTop: "30px", marginBottom: "20px" }}
       >
         <strong>Current Plan:</strong> {currentSubscription}
       </div>
-      <Box sx={{ minWidth: 120 }} style={{ marginBottom: "20px", marginTop:'40px' }}>
-          <FormControl fullWidth>
-            <InputLabel
-              id="demo-simple-select-label"
-              style={{  fontSize: "16px", color: "black" }}
-            >
-              Subscription Plan
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={newSubscription}
-              label="Subscription"
-              onChange={(e) => setNewSubscription(e.target.value)}
-            >
-              <MenuItem value="Basic">Basic</MenuItem>
-              <MenuItem value="Standard">Standard</MenuItem>
-              <MenuItem value="Premium">Premium</MenuItem>
-            </Select>
+      <Box sx={{ minWidth: 120 }} style={{ marginBottom: "20px", marginTop: '40px' }}>
+        <FormControl fullWidth>
+          <InputLabel
+            id="demo-simple-select-label"
+            style={{ fontSize: "16px", color: "black" }}
+          >
+            Subscription Plan
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={newSubscription}
+            label="Subscription"
+            onChange={(e) => setNewSubscription(e.target.value)}
+          >
+            <MenuItem value="Basic">Basic</MenuItem>
+            <MenuItem value="Standard">Standard</MenuItem>
+            <MenuItem value="Premium">Premium</MenuItem>
+          </Select>
 
-          </FormControl>
-        </Box>
+        </FormControl>
+      </Box>
 
-      {/* <label htmlFor="newSubscription">Select New Plan:</label>
-
-      <select
-        id="newSubscription"
-        value={newSubscription}
-        onChange={(e) => setNewSubscription(e.target.value)}
-      >
-        <option value="Basic">Basic</option>
-        <option value="Standard">Standard</option>
-        <option value="Premium">Premium</option>
-      </select> */}
-
-      <button onClick={handleUpdatePlan} style={{padding:'10px', width:'160px'}}>   Update Plan   </button>
+      <button onClick={handleUpdatePlan} style={{ padding: '10px', width: '160px' }}>   Update Plan   </button>
 
       {isCancellationConfirmed ? (
         <p>Your subscription has been cancelled.</p>
       ) : (
         <div>
-          <button onClick={handleCancelSubscription}  style={{marginTop:'10px', backgroundColor:'red', padding:'10px'}}>
+          <button onClick={handleCancelSubscription} style={{ marginTop: '10px', backgroundColor: 'red', padding: '10px' }}>
             Cancel Subscription
           </button>
         </div>

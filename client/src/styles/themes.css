@@ -1,33 +1,31 @@
-/* themes.css */
-
 .light-theme {
-    background-color: #ffffff; /* Light background color */
-    color: #000000; /* Dark text color */
-  }
-  
-  .dark-theme {
-    background-color: #333333; /* Dark background color */
-    color: #ffffff; /* Light text color */
-  }
-  
-  body.light-theme {
-    background-color: #ffffff; /* Light background color */
-    color: #000000; /* Dark text color */
-  }
-  
-  body.dark-theme {
-    background-color: #333333; /* Dark background color */
-    color: #ffffff; /* Light text color */
-  }
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.dark-theme {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.light-theme {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark-theme {
+  background-color: #333333;
+  color: #ffffff;
+}
 
 .small-font {
-    font-size: 14px; /* Small font size */
-  }
-  
-  .medium-font {
-    font-size: 16px; /* Medium font size */
-  }
-  
-  .large-font {
-    font-size: 18px; /* Large font size */
-  }
+  font-size: 14px;
+}
+
+.medium-font {
+  font-size: 16px;
+}
+
+.large-font {
+  font-size: 18px;
+}
